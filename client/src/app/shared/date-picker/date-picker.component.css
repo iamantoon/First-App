@@ -1,0 +1,14 @@
+.select {
+    display: block;
+    width: 30%;
+    padding: 8px 19px;
+    margin-top: 3px;
+    border-radius: 5px;
+    background-color: var(--grey);
+    color: var(--black);
+    cursor: pointer;
+}
+
+input::placeholder {
+    color: var(--black);
+}

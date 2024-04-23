@@ -1,0 +1,70 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7.5px;
+    border-radius: 15px;
+    padding: 17px 15px;
+    border: 1.5px solid var(--border-grey);
+    margin: 15px 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 23px;
+}
+
+.name {
+    font-size: 1rem;
+    color: var(--black);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.button-toggle {
+    background-color: var(--white);
+    border: none;
+    width: 15px;
+    height: 15px;
+}
+
+.description {
+    color: var(--font-grey);
+    font-size: 0.8rem;
+}
+
+.date {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.priority {
+    border-radius: 30px;
+    padding: 5px 10px;
+    background-color: var(--priority-grey);
+    color: var(--font-grey);
+    font-size: 0.85rem;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.select {
+    display: block;
+    width: 100%;
+    padding: 8px 19px;
+    margin-top: 3px;
+    border-radius: 5px;
+    background-color: var(--grey);
+    color: var(--black);
+    cursor: pointer;
+}
+
+.dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
+
+.delete {
+    color: var(--red);
+}

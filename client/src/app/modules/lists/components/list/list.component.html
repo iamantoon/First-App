@@ -1,0 +1,47 @@
+<div class="container">
+    <header class="header">
+        <h5 class="list-name">{{list}}</h5>
+        <div class="header__button">
+            <p class="count">{{count}}</p>
+            <div class="dropdown" dropdown>
+                <button dropdownToggle class="button-toggle">
+                    <i class="fa fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" *dropdownMenu>
+                    <p class="dropdown-item">
+                        <i class="fa fa-edit"></i>
+                        Edit
+                    </p>
+                    <p class="dropdown-item delete">
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <button class="button">+ Add new card</button>
+    <div>
+        <app-card 
+            [name]="'English'" 
+            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
+            [dueDate]="'Saturday, 28 Apr'"
+            [priority]="'Low'"
+            (moveTo)="moveTo($event)"
+        ></app-card>
+        <app-card
+            [name]="'Programming'" 
+            [description]="'Task descriptions should be unambiguous, accurate, factual'"
+            [dueDate]="'Friday, 26 Apr'"
+            [priority]="'Medium'"
+            (moveTo)="moveTo($event)"
+        ></app-card>
+        <app-card
+            [name]="'History'" 
+            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
+            [dueDate]="'Sunday, 27 Apr'"
+            [priority]="'High'"
+            (moveTo)="moveTo($event)"
+        ></app-card>
+    </div>
+</div>

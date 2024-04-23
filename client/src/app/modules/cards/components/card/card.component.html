@@ -1,0 +1,30 @@
+<div class="container">
+    <header class="header">
+        <h5 class="name">{{name}}</h5>
+        <div class="dropdown" dropdown>
+            <button dropdownToggle class="button-toggle">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu" *dropdownMenu>
+                <p class="dropdown-item" (click)="openEditModal()">
+                    <i class="fa fa-edit"></i>
+                    Edit
+                </p>
+                <p class="dropdown-item delete">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </p>
+            </div>
+        </div>
+    </header>
+    <p class="description">{{description}}</p>
+    <p class="date">
+        <i class="fa fa-calendar-o"></i>
+        {{dueDate | date}}
+    </p>
+    <span class="priority">• {{priority}}</span>
+    <select [(ngModel)]="selectedOption" class="select">
+        <option [disabled]="true" value="Move to" [defaultSelected]="'Move to'">Move to</option>
+        <option *ngFor="let option of options" [value]="option">{{option}}</option>
+    </select>
+</div>

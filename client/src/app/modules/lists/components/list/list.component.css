@@ -1,0 +1,57 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1.5px solid var(--border-grey);
+    border-bottom: 1.5px solid var(--border-grey);
+    margin-bottom: 10px;
+}
+
+.list-name {
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+.header__button {
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+.button-context {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.button-toggle {
+    width: 15px;
+    background-color: var(--white);
+    border: none;
+}
+
+.count {
+    margin-right: 10px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 8px 19px;
+    margin-bottom: 10px;
+    background-color: var(--white);
+    border: 1.5px dotted var(--border-grey);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.delete {
+    color: var(--red);
+}
+
+.dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
