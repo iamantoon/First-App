@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListsModule } from './modules/lists/lists.module';
 import { SharedModule } from './shared/shared.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HistoryModule } from './modules/history/history.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    BsDropdownModule
+    BsDropdownModule,
+    HistoryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

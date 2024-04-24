@@ -23,7 +23,7 @@
 }
 
 .button-toggle {
-    background-color: var(--white);
+    background-color: rbga(255, 255, 255, 0);
     border: none;
     width: 15px;
     height: 15px;

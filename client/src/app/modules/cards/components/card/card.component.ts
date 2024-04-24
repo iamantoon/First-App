@@ -13,11 +13,14 @@ export class CardComponent implements OnInit {
   @Input() description?: string;
   @Input() dueDate?: string;
   @Input() priority?: 'Low' | 'Medium' | 'High';
+  @Input() list?: string;
+  @Input() lists: any[] = [];
+  @Input() priorities: any[] = [];
+
   @Output() moveTo = new EventEmitter();
   selectedOption: string = '';
   options = ['Planed', 'In progress', 'Closed'];
-  bsModalRef: BsModalRef<EditModalComponent> = new BsModalRef<EditModalComponent>();
-  bsOpenedCardModalRef: BsModalRef<OpenedCardModalComponent> = new BsModalRef<OpenedCardModalComponent>();
+  bsModalRef: BsModalRef<EditModalComponent | OpenedCardModalComponent> = new BsModalRef<EditModalComponent | OpenedCardModalComponent>();
 
   constructor(private modalService: BsModalService) {}
 
@@ -30,18 +33,28 @@ export class CardComponent implements OnInit {
   openEditModal(){
     const initialState: ModalOptions = {
       initialState: {
-        list: [
-          'Do thing',
-          'Another thing',
-          'Something else'
-        ],
-        title: 'Test modal'
+        name: this.name,
+        description: this.description,
+        dueDate: this.dueDate,
+        priority: this.priority,
+        list: this.list,
+        lists: this.lists,
+        priorities: this.priorities
       }
     }
     this.bsModalRef = this.modalService.show(EditModalComponent, initialState);
   }
 
   openCardModal(){
-    this.bsOpenedCardModalRef = this.modalService.show(OpenedCardModalComponent);
+    const initialState: ModalOptions = {
+      initialState: {
+        name: this.name,
+        description: this.description,
+        dueDate: this.dueDate,
+        priority: this.priority,
+        list: this.list
+      }
+    }
+    this.bsModalRef = this.modalService.show(OpenedCardModalComponent, initialState);
   }
 }

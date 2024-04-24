@@ -1,0 +1,95 @@
+.container {
+    padding: 20px;
+}
+
+.modal {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background-color: var(--blue);
+    padding: 0;
+}
+
+.modal-dialog {
+    min-width: 850px;
+    min-height: 750px;
+}
+
+.modal__body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.button {
+    padding: 5px 12px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.description {
+    margin: 25px 0;
+}
+
+.description__heading {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.description__text {
+    color: var(--font-grey);
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: 0.95rem;
+}
+
+.info {
+    display: flex;
+    column-gap: 20px;
+}
+
+.info__name {
+    color: var(--font-grey);
+    font-weight: 500;
+}
+
+.info__value {
+    color: var(--black);
+}
+
+/* History */
+
+.modal__content {
+    display: grid;
+    grid-template-columns: 65% 35%;
+}
+
+.modal__activity {
+    background-color: var(--priority-grey);
+}
+
+.activity__list {
+    list-style-type: circle !important;
+    color: var(--font-grey);
+}

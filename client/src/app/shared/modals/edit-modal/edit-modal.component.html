@@ -25,12 +25,13 @@
             </div>
         </section>
         <p>Description</p>
-        <textarea [value]="description" class="description"></textarea>
+        <textarea [value]="description" class="description" *ngIf="description != undefined">{{description}}</textarea>
+        <textarea class="description" *ngIf="description == undefined"></textarea>
     </div>
 </div>
 <div class="container">
     <div class="footer">
-        <button class="button save" (click)="bsModalRef.hide()">Save</button>
+        <button class="button save" (click)="saveChanges()">Save</button>
         <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
     </div>
 </div>

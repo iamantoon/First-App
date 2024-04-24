@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="count && count > 0 && !editListMode">
     <header class="header">
         <h5 class="list-name">{{list}}</h5>
         <div class="header__button">
@@ -8,7 +8,7 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" *dropdownMenu>
-                    <p class="dropdown-item">
+                    <p class="dropdown-item" (click)="changeEditMode()">
                         <i class="fa fa-edit"></i>
                         Edit
                     </p>
@@ -20,8 +20,8 @@
             </div>
         </div>
     </header>
-    <button class="button">+ Add new card</button>
-    <div>
+    <button class="button" (click)="openEditModal()">+ Add new card</button>
+    <div *ngIf="!editListMode">
         <app-card 
             [name]="'English'" 
             [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
@@ -44,4 +44,19 @@
             (moveTo)="moveTo($event)"
         ></app-card>
     </div>
+</div>
+<div class="container" *ngIf="count != undefined && count === 0">
+    <app-add-list (changeEditMode)="changeMode()" *ngIf="addNewListMode"></app-add-list>
+    <header class="header pointer" *ngIf="!addNewListMode" (click)="changeMode()">
+        <h5 class="list-name">Add another list</h5>
+        <div class="header__button">
+            <button class="button-toggle">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </header>
+</div>
+
+<div class="container" *ngIf="editListMode">
+    <app-edit-list [name]="list" (changeEditMode)="changeEditMode()"></app-edit-list>
 </div>

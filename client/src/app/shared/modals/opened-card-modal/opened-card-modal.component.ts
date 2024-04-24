@@ -7,12 +7,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./opened-card-modal.component.css']
 })
 export class OpenedCardModalComponent implements OnInit {
-  title = '';
-  list: any;
-  closeBtnName = '';
+  name = '';
+  description = '';
+  dueDate = '';
+  priority = '';
+  list = '';
 
-  constructor(private bsOpenedCardModalRef: BsModalRef) { }
+  constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {}
-
 }

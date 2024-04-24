@@ -26,7 +26,7 @@
 
 .button-toggle {
     width: 15px;
-    background-color: var(--white);
+    background-color: rbga(255, 255, 255, 0);
     border: none;
 }
 
@@ -53,5 +53,9 @@
 }
 
 .dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
+
+.pointer {
     cursor: pointer;
 }

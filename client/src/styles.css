@@ -1,5 +1,6 @@
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+
 @import "./app/styles/variables.css";
 @import "./app/styles/reset.css";

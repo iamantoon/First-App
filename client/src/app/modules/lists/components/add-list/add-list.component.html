@@ -1,0 +1,12 @@
+<div class="container">
+    <input 
+        class="input" 
+        name="title" 
+        placeholder="Enter list title..."
+        [(ngModel)]="titleInput"
+    >
+    <div class="buttons">
+        <button class="button add" (click)="addNewList()">Add list</button>
+        <button class="button cancel" (click)="changeMode()">Cancel</button>
+    </div>
+</div>

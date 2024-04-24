@@ -1,14 +1,47 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left">{{title}}</h4>
-    <button type="button" class="btn-close close pull-right">
-        <span class="visually-hidden">&times;</span>
-    </button>
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
 </div>
-<div class="modal-body">
-    <ul *ngIf="list.length">
-        <li *ngFor="let item of list">{{item}}</li>
-    </ul>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default">{{closeBtnName}}</button>
+<div class="body">
+    <div class="modal__content">
+        <div class="modal__body">
+            <div class="container">
+                <div class="modal__header">
+                    <h4 class="name">{{name}}</h4>
+                    <button class="button">Edit card</button>
+                </div>
+                <div class="card-info">
+                    <section class="info">
+                        <p class="info__name">List</p>
+                        <p class="info__value">{{list}}</p>
+                    </section>
+                    <section class="info">
+                        <p class="info__name">Due Date</p>
+                        <p class="info__value">{{dueDate}}</p>
+                    </section>
+                    <section class="info">
+                        <p class="info__name">Priority</p>
+                        <p class="info__value">{{priority}}</p>
+                    </section>
+                </div>
+                <div class="description">
+                    <h5 class="description__heading">Description</h5>
+                    <p class="description__text">{{description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal__activity">
+            <div class="container">
+                <h4 class="name">Activity</h4>
+                <ul class="activity__list">
+                    <li>You changed</li>
+                    <li>You renamed</li>
+                    <li>You created</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
