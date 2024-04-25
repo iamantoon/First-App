@@ -15,6 +15,7 @@ export class AddListComponent implements OnInit {
   ngOnInit(): void {}
 
   addNewList(){
+    console.log(this.titleInput);
     this.listsService.addList(this.titleInput);
     this.changeMode();
   }

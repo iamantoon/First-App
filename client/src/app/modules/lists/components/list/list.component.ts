@@ -12,8 +12,11 @@ export class ListComponent implements OnInit {
   @Input() count?: number;
 
   // @Input() cards: Card[] = [];
-  // @Input() count?: number;
   // @Input() name?: string;
+  
+  @Input() lists: string[] = [];
+  @Input() priorities: string[] = [];
+  @Input() id?: number; // for editing and deleting
 
   addNewListMode = false;
   editListMode = false;
@@ -27,7 +30,8 @@ export class ListComponent implements OnInit {
   openEditModal(){
     const initialState: ModalOptions = {
       initialState: {
-        function: 'Add new card'
+        lists: this.lists,
+        priorities: this.priorities
       }
     }
     this.bsModalRef = this.modalService.show(EditModalComponent, initialState);

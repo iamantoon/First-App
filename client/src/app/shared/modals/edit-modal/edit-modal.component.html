@@ -8,9 +8,15 @@
 <div class="body">
     <div class="container">
         <section class="section-edit">
+            <input formControlName="name" class="input-name">
             <div>
                 <p>List</p>
-                <app-custom-select [options]="['English', 'History', 'Maths']" [label]="'Move To'"></app-custom-select>
+                <app-custom-select 
+                    [options]="lists" 
+                    [label]="list ? list : 'Select list'" 
+                    [formControl]="$any(editCardForm.controls['list'])"
+                    name="list"
+                ></app-custom-select>
             </div>
             <div>
                 <p>Due Date</p>
@@ -21,7 +27,12 @@
             </div>
             <div>
                 <p>Priority</p>
-                <app-custom-select [options]="['Low', 'Medium', 'High']" [label]="'Change priority'"></app-custom-select>
+                <app-custom-select 
+                    [options]="priorities" 
+                    [label]="priority ? priority : 'Select priority'" 
+                    [formControl]="$any(editCardForm.controls['priority'])"
+                    name="priority"
+                ></app-custom-select>
             </div>
         </section>
         <p>Description</p>

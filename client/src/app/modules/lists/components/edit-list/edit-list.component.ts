@@ -10,15 +10,15 @@ export class EditListComponent implements OnInit {
   @Output() changeEditMode = new EventEmitter();
   @Input() id?: number;
   @Input() name?: string;
-  // titleInput: any = '';
 
   constructor(private listsService: ListsService){}
 
   ngOnInit(): void {}
 
   editList(){
-    if (this.name){
-      this.listsService.editList(1, this.name);
+    console.log(this.name);
+    if (this.name && this.id){
+      this.listsService.editList(this.id, this.name);
     }
     this.changeMode();
   }

@@ -23,6 +23,13 @@
     padding: 15px;
 }
 
+.content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 550px;
+}
+
 .title {
     font-weight: 500;
     color: var(--white);
@@ -42,11 +49,8 @@
     font-size: 0.9rem;
 }
 
-.white {
-    color: var(--white);
-}
-
 .button {
+    display: block;
     width: 100%;
     margin: 20px auto;
     padding: 8px 19px;
@@ -56,4 +60,20 @@
     border-radius: 5px;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
+}
+
+.white {
+    color: var(--white);
+}
+
+@media (max-width: 1050px) {
+    .history {
+        width: 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .history {
+        width: 100%;
+    }
 }

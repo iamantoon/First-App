@@ -8,3 +8,7 @@
     color: var(--black);
     cursor: pointer;
 }
+
+.dropdown-item {
+    cursor: pointer;
+}

@@ -59,3 +59,14 @@
     color: var(--black);
     cursor: pointer;
 }
+
+.input-name {
+    display: block;
+    padding: 3px 4px;
+    border: none;
+    border-bottom: 1px solid var(--border-grey);
+    border-radius: 3px;
+    background-color: var(--white);
+    color: var(--black);
+    font-weight: 500;
+}

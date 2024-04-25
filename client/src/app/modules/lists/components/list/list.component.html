@@ -27,21 +27,25 @@
             [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
             [dueDate]="'Saturday, 28 Apr'"
             [priority]="'Low'"
-            (moveTo)="moveTo($event)"
+            [list]="'In progress'"
+            [lists]="lists"
+            [priorities]="priorities"
         ></app-card>
         <app-card
             [name]="'Programming'" 
             [description]="'Task descriptions should be unambiguous, accurate, factual'"
             [dueDate]="'Friday, 26 Apr'"
             [priority]="'Medium'"
-            (moveTo)="moveTo($event)"
+            [lists]="lists"
+            [priorities]="priorities"
         ></app-card>
         <app-card
             [name]="'History'" 
             [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
             [dueDate]="'Sunday, 27 Apr'"
             [priority]="'High'"
-            (moveTo)="moveTo($event)"
+            [lists]="lists"
+            [priorities]="priorities"
         ></app-card>
     </div>
 </div>
@@ -58,5 +62,5 @@
 </div>
 
 <div class="container" *ngIf="editListMode">
-    <app-edit-list [name]="list" (changeEditMode)="changeEditMode()"></app-edit-list>
+    <app-edit-list [name]="list" [id]="id" (changeEditMode)="changeEditMode()"></app-edit-list>
 </div>

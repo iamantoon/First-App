@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Priority } from 'src/app/modules/cards/models/card';
 
 @Component({
   selector: 'app-edit-modal',
@@ -11,13 +12,15 @@ export class EditModalComponent implements OnInit {
   name?: string;
   description?: string;
   dueDate?: string;
-  priority?: 'Low' | 'Medium' | 'High';
+  priority?: Priority;
   list?: string;
+  lists: string[] = [];
+  priorities: string[] = [];
 
   editCardForm: FormGroup = new FormGroup({});
   minDate: Date = new Date();
 
-  constructor(public bsModalRef: BsModalRef) { }
+  constructor(public bsModalRef: BsModalRef){}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -26,7 +29,7 @@ export class EditModalComponent implements OnInit {
     const currentYear = this.minDate.getFullYear();
     this.minDate.setFullYear(currentYear - 18);
   }
-
+ 
   initializeForm(){
     this.editCardForm = new FormGroup({
       name: new FormControl(this.name, Validators.required),
@@ -40,6 +43,7 @@ export class EditModalComponent implements OnInit {
   saveChanges(){
     // PATCH /cards/:id
     // POST  /cards 
+    console.log(this.editCardForm.value);
     this.bsModalRef.hide()
   }
 }
