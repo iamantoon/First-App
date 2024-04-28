@@ -13,7 +13,7 @@ export class CardComponent implements OnInit {
   @Input() name?: string;
   @Input() description?: string;
   @Input() dueDate?: string;
-  @Input() priority?: 'Low' | 'Medium' | 'High';
+  @Input() priority?: string;
   @Input() list?: string;
   @Input() lists: any[] = [];
   @Input() priorities: any[] = [];

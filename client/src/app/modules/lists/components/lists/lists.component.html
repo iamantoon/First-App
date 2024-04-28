@@ -1,26 +1,22 @@
 <div class="container">
-    <app-list 
-        [list]="'Planned'" 
-        [count]="5" 
+    <app-list
+        *ngFor="let list of lists"
+        [list]="list.name"
+        [id]="list.id"
+        [count]="list.cards.length"
+        [cards]="list.cards"
         [lists]="['Planned', 'Is progress', 'Closed']"
         [priorities]="['Low', 'Medium', 'High']"
     ></app-list>
-    <app-list 
-        [list]="'In progress'" 
-        [count]="23" 
-        [lists]="['Planned', 'Is progress', 'Closed']"
-        [priorities]="['Low', 'Medium', 'High']"
-    ></app-list>
-    <app-list 
-        [list]="'Closed'" 
-        [count]="12" 
-        [lists]="['Planned', 'Is progress', 'Closed']"
-        [priorities]="['Low', 'Medium', 'High']"
-    ></app-list>
-    <app-list 
-        [list]="'Add new list'" 
-        [count]="0" 
-        [lists]="['Planned', 'Is progress', 'Closed']"
-        [priorities]="['Low', 'Medium', 'High']"
-    ></app-list>
+    <div>
+        <app-add-list (changeEditMode)="changeMode()" *ngIf="createListMode"></app-add-list>
+        <header class="header pointer" *ngIf="!createListMode" (click)="changeMode()">
+            <h5 class="list-name">Add another list</h5>
+            <div class="header__button">
+                <button class="button-toggle">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </header>
+    </div>
 </div>

@@ -1,6 +1,6 @@
-<div class="container" *ngIf="count && count > 0 && !editListMode">
+<div class="container" *ngIf="!editListMode">
     <header class="header">
-        <h5 class="list-name">{{list}}</h5>
+        <h5 class="list-name">{{list | titlecase}}</h5>
         <div class="header__button">
             <p class="count">{{count}}</p>
             <div class="dropdown" dropdown>
@@ -12,7 +12,7 @@
                         <i class="fa fa-edit"></i>
                         Edit
                     </p>
-                    <p class="dropdown-item delete">
+                    <p class="dropdown-item delete" (click)="deleteList(id!)">
                         <i class="fa fa-trash"></i>
                         Delete
                     </p>
@@ -22,43 +22,16 @@
     </header>
     <button class="button" (click)="openEditModal()">+ Add new card</button>
     <div *ngIf="!editListMode">
-        <app-card 
-            [name]="'English'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
-            [dueDate]="'Saturday, 28 Apr'"
-            [priority]="'Low'"
-            [list]="'In progress'"
-            [lists]="lists"
-            [priorities]="priorities"
-        ></app-card>
         <app-card
-            [name]="'Programming'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual'"
-            [dueDate]="'Friday, 26 Apr'"
-            [priority]="'Medium'"
-            [lists]="lists"
-            [priorities]="priorities"
-        ></app-card>
-        <app-card
-            [name]="'History'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
-            [dueDate]="'Sunday, 27 Apr'"
-            [priority]="'High'"
+            *ngFor="let card of cards"
+            [name]="card.name" 
+            [description]="card.description"
+            [dueDate]="card.date"
+            [priority]="card.priority"
             [lists]="lists"
             [priorities]="priorities"
         ></app-card>
     </div>
-</div>
-<div class="container" *ngIf="count != undefined && count === 0">
-    <app-add-list (changeEditMode)="changeMode()" *ngIf="addNewListMode"></app-add-list>
-    <header class="header pointer" *ngIf="!addNewListMode" (click)="changeMode()">
-        <h5 class="list-name">Add another list</h5>
-        <div class="header__button">
-            <button class="button-toggle">
-                <i class="fa fa-plus"></i>
-            </button>
-        </div>
-    </header>
 </div>
 
 <div class="container" *ngIf="editListMode">

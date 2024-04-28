@@ -10,6 +10,7 @@ import { OpenedCardModalComponent } from './modals/opened-card-modal/opened-card
 import { CustomSelectComponent } from './components/custom-select/custom-select.component'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BsDropdownModule.forRoot(),
     NgxSpinnerModule.forRoot({
       type: 'timer'
+    }),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
     })
   ],
   exports: [
@@ -36,7 +40,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     EditModalComponent,
     OpenedCardModalComponent,
     CustomSelectComponent,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ToastrModule
   ]
 })
 export class SharedModule { }

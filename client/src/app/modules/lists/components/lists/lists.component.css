@@ -4,6 +4,36 @@
     gap: 25px;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1.5px solid var(--border-grey);
+    border-bottom: 1.5px solid var(--border-grey);
+    margin-bottom: 10px;
+}
+
+.list-name {
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+.header__button {
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.button-toggle {
+    width: 15px;
+    background-color: rbga(255, 255, 255, 0);
+    border: none;
+}
+
 @media (max-width: 1000px) {
     .container {
         grid-template-columns: repeat(3, 1fr);

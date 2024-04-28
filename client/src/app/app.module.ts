@@ -10,6 +10,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HistoryModule } from './modules/history/history.module';
 import { CoreModule } from './modules/core/core.module';
 import { LoadingInterceptor } from './modules/core/interceptors/loading.interceptor';
+import { ErrorInterceptor } from './modules/core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoadingInterceptor } from './modules/core/interceptors/loading.intercep
     CoreModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

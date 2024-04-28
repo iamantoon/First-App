@@ -1,31 +1,35 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { Card } from 'src/app/modules/cards/models/card';
 import { EditModalComponent } from 'src/app/shared/modals/edit-modal/edit-modal.component';
+import { ListsService } from '../../services/lists.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   @Input() list?: string;
   @Input() count?: number;
-
-  // @Input() cards: Card[] = [];
-  // @Input() name?: string;
-  
+  @Input() cards: Card[] = [];
+  @Input() name?: string;
   @Input() lists: string[] = [];
   @Input() priorities: string[] = [];
   @Input() id?: number; // for editing and deleting
-
-  addNewListMode = false;
   editListMode = false;
-
   bsModalRef: BsModalRef<EditModalComponent> = new BsModalRef<EditModalComponent>();
 
-  constructor(private modalService: BsModalService) {}
+  constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService) {}
 
-  ngOnInit(): void {}
+  deleteList(id: number){
+    this.listsService.deleteList(id).subscribe({
+      next: () => {
+        this.toastr.success("List has been deleted successfully");
+      }
+    })
+  }
 
   openEditModal(){
     const initialState: ModalOptions = {
@@ -35,14 +39,6 @@ export class ListComponent implements OnInit {
       }
     }
     this.bsModalRef = this.modalService.show(EditModalComponent, initialState);
-  }
-
-  moveTo(moveTo: string){
-    console.log(moveTo);
-  }
-
-  changeMode(){
-    this.addNewListMode = !this.addNewListMode;
   }
 
   changeEditMode(){

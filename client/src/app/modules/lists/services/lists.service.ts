@@ -6,22 +6,23 @@ import { List } from '../models/list';
   providedIn: 'root'
 })
 export class ListsService {
+  baseUrl = 'http://localhost:5000/api/lists/';
 
   constructor(private http: HttpClient){}
 
   getLists(){
-    return this.http.get<List[]>('http://localhost:5000/lists');
+    return this.http.get<List[]>(this.baseUrl);
   }
 
-  addList(list: List){
-    return this.http.post('http://localhost:5000/lists', list);
+  createList(name: string){
+    return this.http.post(this.baseUrl, {name});
   }
 
   editList(id: number, name: string){
-    return this.http.patch('http://localhost:5000/lists/' + id, name);
+    return this.http.patch(this.baseUrl, {id, name});
   }
 
   deleteList(id: number){
-    return this.http.delete('http://localhost:5000/lists/' + id);
+    return this.http.delete(this.baseUrl + id);
   }
 }
