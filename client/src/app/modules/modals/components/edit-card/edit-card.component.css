@@ -2,6 +2,13 @@
     padding: 10px;
 }
 
+.section-edit {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+    padding: 5px;
+}
+
 .modal-header {
     background-color: var(--blue);
 }
@@ -60,12 +67,17 @@
     cursor: pointer;
 }
 
+.dropdown-item {
+    cursor: pointer;
+}
+
 .input-name {
     display: block;
-    padding: 3px 4px;
+    padding: 1px;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
     border: none;
-    border-bottom: 1px solid var(--border-grey);
-    border-radius: 3px;
+    border-bottom: 1.5px solid var(--border-grey);
     background-color: var(--white);
     color: var(--black);
     font-weight: 500;

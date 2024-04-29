@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { List } from '../models/list';
+import { Lists } from '../models/list';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class ListsService {
   constructor(private http: HttpClient){}
 
   getLists(){
-    return this.http.get<List[]>(this.baseUrl);
+    return this.http.get<Lists>(this.baseUrl);
   }
 
   createList(name: string){

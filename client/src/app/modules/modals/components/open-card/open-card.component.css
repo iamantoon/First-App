@@ -83,6 +83,7 @@
 .modal__content {
     display: grid;
     grid-template-columns: 65% 35%;
+    padding: 10px;
 }
 
 .modal__activity {

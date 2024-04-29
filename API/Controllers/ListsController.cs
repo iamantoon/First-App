@@ -17,11 +17,12 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ListDto>>> GetLists()
+        public async Task<ActionResult<IEnumerable<ListToReturnDto>>> GetLists()
         {
             var lists = await _listRepository.GetListsAsync();
+            var listNames = await _listRepository.GetNamesOfListsAsync();
 
-            return Ok(lists);
+            return Ok(new {lists, listNames}); 
         }
 
         [HttpPost]

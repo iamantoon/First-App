@@ -6,18 +6,19 @@ import { Card } from '../models/card';
   providedIn: 'root'
 })
 export class CardsService {
+  baseUrl = 'http://localhost:5000/api/cards/';
 
   constructor(private http: HttpClient){}
 
-  addCard(card: Card){
-    return this.http.post('http://localhost:5000/cards/', card);
+  createCard(card: Card){
+    return this.http.post(this.baseUrl, card);
   }
 
-  editCard(id: number, card: Card){
-    return this.http.post('http://localhost:5000/cards/' + id, card);
+  editCard(id: number, card: Partial<Card>){
+    return this.http.patch(this.baseUrl, {id: id, ...card});
   }
 
   deleteCard(id: number){
-    return this.http.delete('http://localhost:5000/cards/' + id);
+    return this.http.delete(this.baseUrl + id);
   }
 }

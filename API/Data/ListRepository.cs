@@ -24,6 +24,13 @@ namespace API.Data
                 .ToListAsync();   
         }
 
+        public async Task<IEnumerable<ListNamesDto>> GetNamesOfListsAsync()
+        {
+            return await _context.Lists
+                .Select(list => new ListNamesDto { Id = list.Id, Name = list.Name })
+                .ToListAsync();
+        }
+
         public async Task<bool> CreateListAsync(AppList list)
         {
             await _context.Lists.AddAsync(list);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListsService } from '../../services/lists.service';
-import { List } from '../../models/list';
+import { List, Lists, ListsWithIds } from '../../models/list';
 
 @Component({
   selector: 'app-lists',
@@ -9,6 +9,7 @@ import { List } from '../../models/list';
 })
 export class ListsComponent implements OnInit {
   lists: List[] = [];
+  listsNames: ListsWithIds[] = [];
   createListMode = false;
 
   constructor(private listsService: ListsService){}
@@ -19,7 +20,10 @@ export class ListsComponent implements OnInit {
 
   getLists(){
     this.listsService.getLists().subscribe({
-      next: lists => this.lists = lists
+      next: lists => {
+        this.lists = lists.lists;
+        this.listsNames = lists.listNames;
+      }
     })
   }
 

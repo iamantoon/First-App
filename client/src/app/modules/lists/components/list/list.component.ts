@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Card } from 'src/app/modules/cards/models/card';
-import { EditModalComponent } from 'src/app/shared/modals/edit-modal/edit-modal.component';
+import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add-card.component';
 import { ListsService } from '../../services/lists.service';
 import { ToastrService } from 'ngx-toastr';
+import { ListsWithIds } from '../../models/list';
 
 @Component({
   selector: 'app-list',
@@ -15,11 +16,11 @@ export class ListComponent {
   @Input() count?: number;
   @Input() cards: Card[] = [];
   @Input() name?: string;
-  @Input() lists: string[] = [];
+  @Input() lists: ListsWithIds[] = [];
   @Input() priorities: string[] = [];
-  @Input() id?: number; // for editing and deleting
+  @Input() id?: number; // list id
   editListMode = false;
-  bsModalRef: BsModalRef<EditModalComponent> = new BsModalRef<EditModalComponent>();
+  bsModalRef: BsModalRef<AddCardComponent> = new BsModalRef<AddCardComponent>();
 
   constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService) {}
 
@@ -31,14 +32,16 @@ export class ListComponent {
     })
   }
 
-  openEditModal(){
+  openCreateCardModal(){
     const initialState: ModalOptions = {
       initialState: {
         lists: this.lists,
-        priorities: this.priorities
+        priorities: this.priorities,
+        listId: this.id,
+        listName: this.list
       }
     }
-    this.bsModalRef = this.modalService.show(EditModalComponent, initialState);
+    this.bsModalRef = this.modalService.show(AddCardComponent, initialState);
   }
 
   changeEditMode(){

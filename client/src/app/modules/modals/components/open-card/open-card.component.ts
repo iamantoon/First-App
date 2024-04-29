@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-opened-card-modal',
-  templateUrl: './opened-card-modal.component.html',
-  styleUrls: ['./opened-card-modal.component.css']
+  selector: 'app-open-card',
+  templateUrl: './open-card.component.html',
+  styleUrls: ['./open-card.component.css']
 })
-export class OpenedCardModalComponent implements OnInit {
+export class OpenCardComponent implements OnInit {
   name = '';
   description = '';
   dueDate = '';

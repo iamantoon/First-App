@@ -20,16 +20,18 @@
             </div>
         </div>
     </header>
-    <button class="button" (click)="openEditModal()">+ Add new card</button>
+    <button class="button" (click)="openCreateCardModal()">+ Add new card</button>
     <div *ngIf="!editListMode">
         <app-card
             *ngFor="let card of cards"
+            [id]="card.id"
             [name]="card.name" 
             [description]="card.description"
-            [dueDate]="card.date"
+            [dueDate]="card.dueDate"
             [priority]="card.priority"
+            [list]="list"
+            [listId]="id"
             [lists]="lists"
-            [priorities]="priorities"
         ></app-card>
     </div>
 </div>

@@ -1,20 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using API.DTOs;
 
 namespace API.Helpers
 {
-    public class FutureDateAttribute : ValidationAttribute
+    public class RegularExpressionValidatorAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var dateValue = (DateOnly)value;
-            if (value is DateOnly && dateValue == DateOnly.MinValue) 
+            if (value == null) 
             {
                 return ValidationResult.Success; 
             }
 
-            if (dateValue < DateOnly.FromDateTime(DateTime.Today))
+            if (validationContext.MemberName == nameof(UpdateCardDto.Priority) && !new[] { "Low", "Medium", "High" }.Contains(value.ToString()))
             {
-                return new ValidationResult("Due date must be in the future." + dateValue + " " + value);
+                return new ValidationResult("Priority must be Low, Medium, or High.");
             }
 
             return ValidationResult.Success;

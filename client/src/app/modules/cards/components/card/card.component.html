@@ -10,7 +10,7 @@
                     <i class="fa fa-edit"></i>
                     Edit
                 </p>
-                <p class="dropdown-item delete">
+                <p class="dropdown-item delete" >
                     <i class="fa fa-trash"></i>
                     Delete
                 </p>
@@ -26,7 +26,7 @@
     <div class="dropdown" dropdown>
         <button class="select" dropdownToggle>Move To</button>
         <div class="dropdown-menu move" *dropdownMenu>
-            <p class="dropdown-item" *ngFor="let option of options" (click)="moveTo(option)">{{option}}</p>
+            <p class="dropdown-item" *ngFor="let list of lists" (click)="moveTo(list.id)">{{list.name | titlecase}}</p>
         </div>
     </div>
 </div>
