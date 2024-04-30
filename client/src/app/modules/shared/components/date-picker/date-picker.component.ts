@@ -9,6 +9,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class DatePickerComponent implements ControlValueAccessor {
   @Input() minDate: Date | undefined;
+  // @Input() currentDate: Date = new Date();
   bsConfig: Partial<BsDatepickerConfig> | undefined;
 
   constructor(@Self() public ngControl: NgControl) { 

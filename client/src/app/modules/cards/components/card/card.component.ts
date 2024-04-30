@@ -36,22 +36,24 @@ export class CardComponent {
   }
 
   deleteCard(id: number){
-    this.cardsService.deleteCard(id).subscribe({
-      next: () => {
-        this.toastr.success('Card has been deleted');
-      }
-    })
+    if (this.id){
+      this.cardsService.deleteCard(id).subscribe({
+        next: () => {
+          this.toastr.success('Card has been deleted');
+        }
+      })
+    }
   }
 
   openEditModal(){
     const initialState: ModalOptions = {
       initialState: {
-        id: this.id,
-        name: this.name,
+        cardId: this.id,
+        cardName: this.name,
         description: this.description,
         dueDate: this.dueDate,
         priority: this.priority,
-        list: this.list,
+        listName: this.list,
         listId: this.listId,
         lists: this.lists,
         priorities: this.priorities

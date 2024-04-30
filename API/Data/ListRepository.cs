@@ -58,10 +58,11 @@ namespace API.Data
 
         public async Task<bool> ListExists(string name)
         {
-            var list = await _context.Lists.FirstOrDefaultAsync(x => x.Name == name);
+            var list = await _context.Lists.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
 
-            if (list == null) return false;
-            else return true;
+            if (list != null) return true;
+
+            return false;
         }
 
         public async Task<bool> SaveAllAsync()

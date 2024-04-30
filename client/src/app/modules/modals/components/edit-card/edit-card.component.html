@@ -13,11 +13,11 @@
                 <p>List</p>
                 <div class="btn-group" dropdown>
                     <button dropdownToggle class="select dropdown-toggle">
-                        {{editCardForm.value['listInfo'].list}} <span class="caret"></span>
+                        {{editCardForm.value['listInfo'].name}} <span class="caret"></span>
                     </button>
                     <ul *dropdownMenu class="dropdown-menu">
                         <li role="menuitem" *ngFor="let item of lists">
-                            <p class="dropdown-item" (click)="changeList(item)">{{item.name | titlecase}}</p>
+                            <p class="dropdown-item" (click)="changeList(item)">{{item.name}}</p>
                         </li>
                     </ul>
                 </div>
@@ -30,7 +30,7 @@
                 <p>Priority</p>
                 <div class="btn-group" dropdown>
                     <button dropdownToggle class="select dropdown-toggle">
-                        {{priority}} <span class="caret"></span>
+                        {{editCardForm.value['priority']}} <span class="caret"></span>
                     </button>
                     <ul *dropdownMenu class="dropdown-menu">
                         <li role="menuitem" *ngFor="let priority of priorities">

@@ -32,7 +32,7 @@ namespace API.Controllers
 
             var newList = new AppList
             {
-                Name = createListDto.Name.ToLower(),
+                Name = createListDto.Name,
                 Cards = new List<Card>()
             };
 
