@@ -5,6 +5,8 @@ import { CardsService } from 'src/app/modules/cards/services/cards.service';
 import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { FormatDateService } from '../../services/format-date.service';
+import { ListsService } from 'src/app/modules/lists/services/lists.service';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-add-card',
@@ -21,7 +23,7 @@ export class AddCardComponent implements OnInit {
   listObject: any = {};
 
   constructor(private cardsService: CardsService, public bsModalRef: BsModalRef, private toastr: ToastrService,
-    private formatDateService: FormatDateService) {}
+    private formatDateService: FormatDateService, private listsService: ListsService) {}
 
   ngOnInit(): void {
     this.listObject = {id: this.listId, name: this.listName};
@@ -38,19 +40,26 @@ export class AddCardComponent implements OnInit {
     });
   }
 
-  createCard(){
-    if (this.createCardForm.valid){
-      this.cardsService.createCard( 
-        {
-          ...this.createCardForm.value,
-          listId: this.listId, 
-          dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate'])
-        }).subscribe({
-        next: () => {
+  createCard() {
+    if (this.createCardForm.valid) {
+      const cardData = {
+        ...this.createCardForm.value,
+        listId: this.listId, 
+        dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate'])
+      };
+      this.cardsService.createCard(cardData).pipe(
+        switchMap(() => this.listsService.getLists()),
+        catchError(error => {
+          this.toastr.error("Failed to create card: " + error.message);
+          return of(null);
+        })
+      ).subscribe(response => {
+        if (response) {
+          this.listsService.setLists(response);
           this.toastr.success("Card has been created");
         }
-      })
-      this.bsModalRef.hide()
+      });
+      this.bsModalRef.hide();
     } else {
       this.toastr.error('Please fill all required fields');
     }
@@ -61,7 +70,6 @@ export class AddCardComponent implements OnInit {
   }
 
   changePriority(priority: string){
-    console.log(priority);
     this.createCardForm.get('priority')?.setValue(priority);
   }
 }

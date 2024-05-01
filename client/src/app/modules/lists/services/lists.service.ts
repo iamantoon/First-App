@@ -1,17 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Lists } from '../models/list';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListsService {
   baseUrl = 'http://localhost:5000/api/lists/';
+  listsSubject: BehaviorSubject<Lists> = new BehaviorSubject<Lists>({lists: [], listNames: []});
+  lists$: Observable<Lists> = this.listsSubject.asObservable(); 
 
   constructor(private http: HttpClient){}
 
   getLists(){
-    return this.http.get<Lists>(this.baseUrl);
+    return this.http.get<Lists>(this.baseUrl).pipe(
+      map(response => {
+        this.listsSubject.next(response);
+        return response;
+      })
+    )
+  }
+
+  setLists(lists: Lists){
+    this.listsSubject.next(lists);
   }
 
   createList(name: string){

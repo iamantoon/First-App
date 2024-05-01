@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container" *ngIf="(this.listsService.lists$ | async) as lists">
     <app-list
-        *ngFor="let list of lists"
+        *ngFor="let list of lists?.lists"
         [listName]="list.name"
         [listId]="list.id"
         [count]="list.cards.length"
         [cards]="list.cards"
-        [lists]="listsNames"
+        [lists]="lists.listNames"
         [priorities]="['Low', 'Medium', 'High']"
     ></app-list>
     <div>

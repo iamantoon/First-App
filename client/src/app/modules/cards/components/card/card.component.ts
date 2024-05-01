@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { EditCardComponent } from 'src/app/modules/modals/components/edit-card/edit-card.component';
 import { OpenCardComponent } from 'src/app/modules/modals/components/open-card/open-card.component';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
+import { switchMap } from 'rxjs';
+import { ListsService } from 'src/app/modules/lists/services/lists.service';
 
 @Component({
   selector: 'app-card',
@@ -23,29 +25,31 @@ export class CardComponent {
   priorities = ['Low', 'Medium', 'High'];
   bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 
-  constructor(private cardsService: CardsService, private modalService: BsModalService, private toastr: ToastrService){}
+  constructor(private cardsService: CardsService, private modalService: BsModalService, 
+    private toastr: ToastrService, private listsService: ListsService){}
 
-  moveTo(move: number){
-    this.cardsService.editCard(this.id!, {listId: move}).subscribe({
-      next: () => {
-        this.toastr.success('List has been edited');
-      },
-      error: (error) => {
-        this.toastr.error("Something unexpected went wrong: " + error);
+  moveTo(move: number) {
+    this.cardsService.editCard(this.id!, {listId: move}).pipe(
+      switchMap(() => this.listsService.getLists())
+    ).subscribe({
+      next: response => {
+        this.listsService.setLists(response);
+        this.toastr.success(`Card ${this.name} has been moved`);
       }
-    })
+    });
   }
 
-  deleteCard(id: number){
-    if (this.id){
-      this.cardsService.deleteCard(id).subscribe({
-        next: () => {
-          this.toastr.success('Card has been deleted');
-        }
-      })
-    }
-  }
-
+  deleteCard(id: number) {
+    this.cardsService.deleteCard(id).pipe(
+      switchMap(() => this.listsService.getLists())
+    ).subscribe({
+      next: response => {
+        this.listsService.setLists(response);
+        this.toastr.success(`Card ${this.name} has been deleted`);
+      }
+    });
+  } 
+  
   openEditModal(){
     const initialState: ModalOptions = {
       initialState: {

@@ -5,6 +5,7 @@ import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add
 import { ListsService } from '../../services/lists.service';
 import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from '../../models/list';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -23,14 +24,17 @@ export class ListComponent {
 
   constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService) {}
 
-  deleteList(id: number){
-    this.listsService.deleteList(id).subscribe({
-      next: () => {
-        this.toastr.success("List has been deleted successfully");
+  deleteList(id: number) {
+    this.listsService.deleteList(id).pipe(
+      switchMap(() => this.listsService.getLists())
+    ).subscribe({
+      next: response => {
+        this.listsService.setLists(response);
+        this.toastr.success(`List has been deleted`);
       }
-    })
-  }
-
+    });
+  } 
+  
   openCreateCardModal(){
     const initialState: ModalOptions = {
       initialState: {

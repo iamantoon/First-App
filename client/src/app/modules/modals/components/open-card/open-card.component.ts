@@ -27,7 +27,6 @@ export class OpenCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.id && this.getCardActivity(this.id);
-    console.log('ng on init');
   }
 
   getCardActivity(id: number){
