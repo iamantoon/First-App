@@ -9,5 +9,6 @@ namespace API.Data
 
         public DbSet<AppList> Lists { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Activity> LoggedActivities { get; set; }
     }
 }

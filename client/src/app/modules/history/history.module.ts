@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
+import { SharedModule } from '../shared/shared.module';
+import { ActivityComponent } from './components/activity/activity.component';
 
 @NgModule({
   declarations: [
-    HistoryComponent
+    HistoryComponent,
+    ActivityComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     HistoryComponent

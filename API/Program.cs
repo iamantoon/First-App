@@ -14,6 +14,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
 });
 builder.Services.AddScoped<IListRepository, ListRepository>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
+builder.Services.AddScoped<ILogActivityRepository, LogActivityRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();

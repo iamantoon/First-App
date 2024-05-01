@@ -12,6 +12,8 @@ namespace API.Helpers
             CreateMap<Card, CardDto>();
             CreateMap<CreateListDto, AppList>();
             CreateMap<UpdateCardDto, CardDto>();
+            CreateMap<Activity, ActivityDto>();
+            CreateMap<ActivityDto, ActivitiesToReturnDto>();
         }
     }
 }

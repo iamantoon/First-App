@@ -7,8 +7,8 @@ namespace API.Interfaces
     {
         Task<bool> CreateCardAsync(Card card);
         Task<CardDto> UpdateCardAsync(UpdateCardDto card);
-        bool DeleteCard(Card cardToDelete);
         Task<Card> FindCardByIdAsync(int id);
+        bool DeleteCard(Card cardToDelete);
         void Update(Card card);
         Task<bool> SaveAllAsync();
     }

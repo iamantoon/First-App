@@ -11,17 +11,18 @@
     </div>
     <div class="history-body">
         <div class="container content-container">
-            <div class="history-content">
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-                <li>You added WORK to ESSENTIAL list</li>
-            </div>
+            <ul class="history-content">
+                <li *ngFor="let activity of loggedActivity">
+                    <app-activity 
+                        [cardName]="activity.cardName"
+                        [activityName]="activity.activityName"
+                        [date]="activity.date"
+                        [previousValue]="activity.previous"
+                        [updatedValue]="activity.updated"
+                        [listName]="activity.listName"
+                    ></app-activity>
+                </li>
+            </ul>
             <button class="button">Show more</button>
         </div>
     </div>
