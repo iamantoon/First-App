@@ -14,6 +14,7 @@ namespace API.Interfaces
         Task<bool> LogMoveCardAsync(string cardName, string previousList, string newList);
         Task<bool> LogDeleteCardAsync(string cardName, string listName);
         Task<ActivityResponseDto> GetActivitiesAsync(int pageSize);
+        Task<IEnumerable<ActivityDto>> GetActivitiesByCardNameAsync(string cardName);
         void Update(Activity activity);
         Task<bool> SaveAllAsync();
     }

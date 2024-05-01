@@ -14,7 +14,8 @@ import { ActivityComponent } from './components/activity/activity.component';
     SharedModule
   ],
   exports: [
-    HistoryComponent
+    HistoryComponent,
+    ActivityComponent
   ]
 })
 export class HistoryModule { }

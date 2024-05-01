@@ -1,14 +1,32 @@
+.modal-header {
+    background-color: var(--blue);
+    padding: 0;
+}
+
+.modal {
+    width: 700px !important;
+}
+
 .container {
-    padding: 20px;
+    padding: 10px;
+}
+
+.button {
+    padding: 5px 12px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
 }
 
 .modal {
     border-radius: 10px;
 }
 
-.modal-header {
-    background-color: var(--blue);
-    padding: 0;
+.modal-content {
+    width: 750px;
+    height: 600px;
 }
 
 .modal-dialog {
@@ -20,6 +38,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    padding: 5px;
 }
 
 .modal__header {
@@ -32,15 +51,6 @@
     font-size: 1.1rem;
     font-weight: 500;
     color: var(--black);
-}
-
-.button {
-    padding: 5px 12px;
-    border: 1px solid var(--border-grey);
-    background-color: var(--white);
-    border-radius: 5px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
 }
 
 .description {
@@ -78,19 +88,26 @@
     color: var(--black);
 }
 
-/* History */
-
 .modal__content {
     display: grid;
     grid-template-columns: 65% 35%;
-    padding: 10px;
 }
 
+/* Activity */
+
 .modal__activity {
+    padding: 5px;
     background-color: var(--priority-grey);
 }
 
 .activity__list {
-    list-style-type: circle !important;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    /* overflow-y: scroll; */
+
     color: var(--font-grey);
+    font-weight: 500;
+    font-size: 0.9rem;
 }

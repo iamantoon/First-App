@@ -11,6 +11,7 @@
 
 .modal-header {
     background-color: var(--blue);
+    padding: 3px;
 }
 
 .footer {

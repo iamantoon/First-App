@@ -37,6 +37,18 @@ namespace API.Data
             return response;
         }
 
+        public async Task<IEnumerable<ActivityDto>> GetActivitiesByCardNameAsync(string cardName)
+        {
+            var activities = await _context.LoggedActivities
+                .Where(a => a.CardName == cardName)
+                .Take(7)
+                .OrderByDescending(a => a.Date)
+                .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return activities;
+        }
+
         public async Task<bool> LogChangeDescriptionAsync(string cardName, string previousDescription, string newDescription)
         {
             var activity = new Activity

@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="modal__header">
                     <h4 class="name">{{name}}</h4>
-                    <button class="button">Edit card</button>
+                    <button class="button" (click)="editCard()">Edit card</button>
                 </div>
                 <div class="card-info">
                     <section class="info">
@@ -20,7 +20,7 @@
                     </section>
                     <section class="info">
                         <p class="info__name">Due Date</p>
-                        <p class="info__value">{{dueDate}}</p>
+                        <p class="info__value">{{dueDate | date}}</p>
                     </section>
                     <section class="info">
                         <p class="info__name">Priority</p>
@@ -37,9 +37,15 @@
             <div class="container">
                 <h4 class="name">Activity</h4>
                 <ul class="activity__list">
-                    <li>You changed</li>
-                    <li>You renamed</li>
-                    <li>You created</li>
+                    <app-activity 
+                        *ngFor="let activity of activities"
+                        [cardName]="activity.cardName"
+                        [activityName]="activity.activityName"
+                        [date]="activity.date"
+                        [previousValue]="activity.previous"
+                        [updatedValue]="activity.updated"
+                        [listName]="activity.listName"
+                    ></app-activity>
                 </ul>
             </div>
         </div>

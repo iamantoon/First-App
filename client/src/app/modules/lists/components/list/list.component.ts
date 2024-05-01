@@ -12,13 +12,12 @@ import { ListsWithIds } from '../../models/list';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-  @Input() list?: string;
+  @Input() listName?: string;
+  @Input() listId?: number;
   @Input() count?: number;
   @Input() cards: Card[] = [];
-  @Input() name?: string;
   @Input() lists: ListsWithIds[] = [];
   @Input() priorities: string[] = [];
-  @Input() id?: number; // list id
   editListMode = false;
   bsModalRef: BsModalRef<AddCardComponent> = new BsModalRef<AddCardComponent>();
 
@@ -37,8 +36,8 @@ export class ListComponent {
       initialState: {
         lists: this.lists,
         priorities: this.priorities,
-        listId: this.id,
-        listName: this.list
+        listId: this.listId,
+        listName: this.listName
       }
     }
     this.bsModalRef = this.modalService.show(AddCardComponent, initialState);

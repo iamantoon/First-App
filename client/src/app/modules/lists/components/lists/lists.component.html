@@ -1,8 +1,8 @@
 <div class="container">
     <app-list
         *ngFor="let list of lists"
-        [list]="list.name"
-        [id]="list.id"
+        [listName]="list.name"
+        [listId]="list.id"
         [count]="list.cards.length"
         [cards]="list.cards"
         [lists]="listsNames"
@@ -10,10 +10,10 @@
     ></app-list>
     <div>
         <app-add-list (changeEditMode)="changeMode()" *ngIf="createListMode"></app-add-list>
-        <header class="header pointer" *ngIf="!createListMode" (click)="changeMode()">
+        <header class="header pointer" *ngIf="!createListMode">
             <h5 class="list-name">Add another list</h5>
             <div class="header__button">
-                <button class="button-toggle">
+                <button class="button-toggle" (click)="changeMode()">
                     <i class="fa fa-plus"></i>
                 </button>
             </div>

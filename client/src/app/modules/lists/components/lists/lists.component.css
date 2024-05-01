@@ -13,6 +13,10 @@
     margin-bottom: 10px;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .list-name {
     margin: 15px 0;
     font-size: 1.1rem;
@@ -22,10 +26,6 @@
     display: flex;
     align-items: center;
     column-gap: 3px;
-}
-
-.pointer {
-    cursor: pointer;
 }
 
 .button-toggle {

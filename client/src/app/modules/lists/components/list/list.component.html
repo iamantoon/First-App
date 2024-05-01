@@ -1,6 +1,6 @@
 <div class="container" *ngIf="!editListMode">
     <header class="header">
-        <h5 class="list-name">{{list | titlecase}}</h5>
+        <h5 class="list-name">{{listName | titlecase}}</h5>
         <div class="header__button">
             <p class="count">{{count}}</p>
             <div class="dropdown" dropdown>
@@ -12,7 +12,7 @@
                         <i class="fa fa-edit"></i>
                         Edit
                     </p>
-                    <p class="dropdown-item delete" (click)="deleteList(id!)">
+                    <p class="dropdown-item delete" (click)="deleteList(listId!)">
                         <i class="fa fa-trash"></i>
                         Delete
                     </p>
@@ -29,13 +29,13 @@
             [description]="card.description"
             [dueDate]="card.dueDate"
             [priority]="card.priority"
-            [list]="list"
-            [listId]="id"
+            [list]="listName"
+            [listId]="listId"
             [lists]="lists"
         ></app-card>
     </div>
 </div>
 
 <div class="container" *ngIf="editListMode">
-    <app-edit-list [name]="list" [id]="id" (changeEditMode)="changeEditMode()"></app-edit-list>
+    <app-edit-list [name]="listName" [id]="listId" (changeEditMode)="changeEditMode()"></app-edit-list>
 </div>

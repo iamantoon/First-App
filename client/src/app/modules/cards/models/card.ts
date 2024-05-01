@@ -7,5 +7,3 @@ export interface Card {
     list: string;
     listId: number;
 }
-
-export type Priority = 'Low' | 'Medium' | 'High';

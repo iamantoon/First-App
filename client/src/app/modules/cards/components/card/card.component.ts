@@ -4,6 +4,7 @@ import { CardsService } from '../../services/cards.service';
 import { ToastrService } from 'ngx-toastr';
 import { EditCardComponent } from 'src/app/modules/modals/components/edit-card/edit-card.component';
 import { OpenCardComponent } from 'src/app/modules/modals/components/open-card/open-card.component';
+import { ListsWithIds } from 'src/app/modules/lists/models/list';
 
 @Component({
   selector: 'app-card',
@@ -18,11 +19,11 @@ export class CardComponent {
   @Input() priority?: string;
   @Input() list?: string; // list name
   @Input() listId?: number; // list id
-  @Input() lists: any[] = [];
+  @Input() lists: ListsWithIds[] = [];
   priorities = ['Low', 'Medium', 'High'];
   bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 
-  constructor(private cardsService: CardsService, private modalService: BsModalService, private toastr: ToastrService) {}
+  constructor(private cardsService: CardsService, private modalService: BsModalService, private toastr: ToastrService){}
 
   moveTo(move: number){
     this.cardsService.editCard(this.id!, {listId: move}).subscribe({
@@ -65,12 +66,17 @@ export class CardComponent {
   openCardModal(){
     const initialState: ModalOptions = {
       initialState: {
+        id: this.id,
         name: this.name,
         description: this.description,
         dueDate: this.dueDate,
         priority: this.priority,
-        list: this.list
-      }
+        list: this.list,
+        listId: this.listId,
+        lists: this.lists,
+        priorities: this.priorities
+      },
+      class: 'modal-lg'
     }
     this.bsModalRef = this.modalService.show(OpenCardComponent, initialState);
   }

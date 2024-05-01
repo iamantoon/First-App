@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { HistoryModule } from '../history/history.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ReactiveFormsModule,
     SharedModule,
     ToastrModule,
-    ModalModule
+    ModalModule,
+    HistoryModule
   ],
   exports: [
     AddCardComponent,

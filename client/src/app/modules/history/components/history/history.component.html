@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="history-body">
-        <div class="container content-container">
-            <ul class="history-content">
+        <div class="content-container">
+            <ul class="history-content scroll-wrapper">
                 <li *ngFor="let activity of loggedActivity">
                     <app-activity 
                         [cardName]="activity.cardName"
@@ -22,8 +22,8 @@
                         [listName]="activity.listName"
                     ></app-activity>
                 </li>
+                <button class="button" *ngIf="totalCount && pageSize && totalCount > pageSize" (click)="showMore()">Show more</button>
             </ul>
-            <button class="button">Show more</button>
         </div>
     </div>
 </div>
