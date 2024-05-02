@@ -44,6 +44,11 @@
     color: var(--white);
 }
 
+.button-disabled {
+    background-color: var(--blue-disabled);
+    border: 1px solid var(--blue-disabled);
+}
+
 .description {
     width: 100%;
     height: 100px;

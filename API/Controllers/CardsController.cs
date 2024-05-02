@@ -36,7 +36,7 @@ namespace API.Controllers
             var list = await _listRepository.FindListByIdAsync(createCardDto.ListId);
 
             if (await _cardRepository.CreateCardAsync(card)) {
-                await _logActivityRepository.LogCreateCardAsync(card.Name, list.Name);
+                await _logActivityRepository.LogCreateCardAsync(card.Name, card.Id, list.Name);
                 return NoContent();
             }
         
@@ -51,22 +51,22 @@ namespace API.Controllers
             if (cardToUpdate == null) return NotFound();
 
             if (updateCardDto.Name != null && updateCardDto.Name != cardToUpdate.Name){
-                await _logActivityRepository.LogChangeNameAsync(cardToUpdate.Name, updateCardDto.Name);
+                await _logActivityRepository.LogChangeNameAsync(updateCardDto.Id, cardToUpdate.Name, updateCardDto.Name);
                 cardToUpdate.Name = updateCardDto.Name;
             }
 
             if (updateCardDto.Description != null && updateCardDto.Description != cardToUpdate.Description){
-                await _logActivityRepository.LogChangeDescriptionAsync(cardToUpdate.Name, cardToUpdate.Description, updateCardDto.Description);
+                await _logActivityRepository.LogChangeDescriptionAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Description, updateCardDto.Description);
                 cardToUpdate.Description = updateCardDto.Description;
             }
 
             if (updateCardDto.DueDate != default && updateCardDto.DueDate != cardToUpdate.DueDate){
-                await _logActivityRepository.LogChangeDueDateAsync(cardToUpdate.Name, cardToUpdate.DueDate, updateCardDto.DueDate);
+                await _logActivityRepository.LogChangeDueDateAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.DueDate, updateCardDto.DueDate);
                 cardToUpdate.DueDate = updateCardDto.DueDate;
             }
 
             if (updateCardDto.Priority != null && updateCardDto.Priority != cardToUpdate.Priority){
-                await _logActivityRepository.LogChangePriorityAsync(cardToUpdate.Name, cardToUpdate.Priority, updateCardDto.Priority);
+                await _logActivityRepository.LogChangePriorityAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Priority, updateCardDto.Priority);
                 cardToUpdate.Priority = updateCardDto.Priority;
             }
 
@@ -74,7 +74,7 @@ namespace API.Controllers
                 var previousList = await _listRepository.FindListByIdAsync(cardToUpdate.AppListId);
                 var newList = await _listRepository.FindListByIdAsync(updateCardDto.ListId);
             
-                await _logActivityRepository.LogMoveCardAsync(cardToUpdate.Name, previousList.Name, newList.Name);
+                await _logActivityRepository.LogMoveCardAsync(cardToUpdate.Name, updateCardDto.Id, previousList.Name, newList.Name);
                 cardToUpdate.AppListId = updateCardDto.ListId;
             }
 
@@ -95,7 +95,7 @@ namespace API.Controllers
             _cardRepository.DeleteCard(cardToDelete);
 
             if (await _cardRepository.SaveAllAsync()) {
-                await _logActivityRepository.LogDeleteCardAsync(cardToDelete.Name, list.Name);
+                await _logActivityRepository.LogDeleteCardAsync(cardToDelete.Name, id, list.Name);
                 return Ok();
             }
 

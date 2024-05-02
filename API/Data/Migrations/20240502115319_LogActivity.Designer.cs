@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240430222206_LogUserActivity")]
-    partial class LogUserActivity
+    [Migration("20240502115319_LogActivity")]
+    partial class LogActivity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,9 @@ namespace API.Data.Migrations
 
                     b.Property<string>("ActivityName")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CardName")
                         .HasColumnType("TEXT");

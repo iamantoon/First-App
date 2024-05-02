@@ -63,7 +63,7 @@ export class EditCardComponent implements OnInit {
       ).subscribe(response => {
         if (response) {
           this.listsService.setLists(response);
-          this.toastr.success("Card has been created");
+          this.toastr.success(`Card ${this.cardName} has been updated`);
         }
       });
       this.bsModalRef.hide();

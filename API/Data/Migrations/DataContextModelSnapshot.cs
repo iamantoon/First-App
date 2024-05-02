@@ -26,6 +26,9 @@ namespace API.Data.Migrations
                     b.Property<string>("ActivityName")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CardId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("CardName")
                         .HasColumnType("TEXT");
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class LogUserActivity : Migration
+    public partial class LogActivity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,7 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CardName = table.Column<string>(type: "TEXT", nullable: true),
+                    CardId = table.Column<int>(type: "INTEGER", nullable: false),
                     ActivityName = table.Column<string>(type: "TEXT", nullable: true),
                     ListName = table.Column<string>(type: "TEXT", nullable: true),
                     Previous = table.Column<string>(type: "TEXT", nullable: true),

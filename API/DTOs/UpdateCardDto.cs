@@ -6,22 +6,22 @@ namespace API.DTOs
     public class UpdateCardDto
     {
         [Required] 
-        [Range(1, int.MaxValue, ErrorMessage = "Invalid Id.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid Id")]
         public int Id { get; set; } 
 
-        [MaxLength(25, ErrorMessage = "Name must be no more than 25 characters.")]
+        [MaxLength(25, ErrorMessage = "Name must be no more than 25 characters")]
         public string Name { get; set; }
 
-        [MaxLength(225, ErrorMessage = "Description must be no more than 225 characters.")]
+        [MaxLength(225, ErrorMessage = "Description must be no more than 225 characters")]
         public string Description { get; set; }
 
-        [FutureDate(ErrorMessage = "Due date must be provided and in the future.")]
+        [ValidDate(ErrorMessage = "Invalid date")]
         public DateOnly DueDate { get; set; }
 
-        [RegularExpressionValidator(ErrorMessage = "Priority must be Low, Medium, or High.")]
+        [RegularExpressionValidator]
         public string Priority { get; set; }
 
-        [ListIdValidator(ErrorMessage = "Invalid ListId.")]
+        [ListIdValidator(ErrorMessage = "Invalid ListId")]
         public int ListId { get; set; }
     }
 }

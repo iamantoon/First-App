@@ -25,9 +25,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<ActivityDto>>> GetActivitesByCardId(int id)
         {
-            var card = await _cardRepository.FindCardByIdAsync(id);
-
-            var activities = await _logActivityRepository.GetActivitiesByCardNameAsync(card.Name);
+            var activities = await _logActivityRepository.GetActivitiesByCardIdAsync(id);
 
             return Ok(activities);
         }

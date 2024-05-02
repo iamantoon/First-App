@@ -37,10 +37,10 @@ namespace API.Data
             return response;
         }
 
-        public async Task<IEnumerable<ActivityDto>> GetActivitiesByCardNameAsync(string cardName)
+        public async Task<IEnumerable<ActivityDto>> GetActivitiesByCardIdAsync(int cardId)
         {
             var activities = await _context.LoggedActivities
-                .Where(a => a.CardName == cardName)
+                .Where(a => a.CardId == cardId)
                 .Take(7)
                 .OrderByDescending(a => a.Date)
                 .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
@@ -49,11 +49,12 @@ namespace API.Data
             return activities;
         }
 
-        public async Task<bool> LogChangeDescriptionAsync(string cardName, string previousDescription, string newDescription)
+        public async Task<bool> LogChangeDescriptionAsync(string cardName, int cardId, string previousDescription, string newDescription)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "changed the description",
                 Previous = previousDescription,
                 Updated = newDescription,
@@ -64,11 +65,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogChangeDueDateAsync(string cardName, DateOnly previousDate, DateOnly newDate)
+        public async Task<bool> LogChangeDueDateAsync(string cardName, int cardId, DateOnly previousDate, DateOnly newDate)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "changed the date",
                 Previous = Convert.ToString(previousDate),
                 Updated = Convert.ToString(newDate),
@@ -79,11 +81,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogChangeNameAsync(string cardName, string newName)
+        public async Task<bool> LogChangeNameAsync(int cardId, string cardName, string newName)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "renamed",
                 Previous = cardName,
                 Updated = newName,
@@ -94,11 +97,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogChangePriorityAsync(string cardName, string previousPriority, string newPriority)
+        public async Task<bool> LogChangePriorityAsync(string cardName, int cardId, string previousPriority, string newPriority)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "changed the priority",
                 Previous = previousPriority,
                 Updated = newPriority,
@@ -109,11 +113,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogCreateCardAsync(string cardName, string listName)
+        public async Task<bool> LogCreateCardAsync(string cardName, int cardId, string listName)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "added",
                 Previous = "",
                 Updated = cardName,
@@ -125,11 +130,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogDeleteCardAsync(string cardName, string listName)
+        public async Task<bool> LogDeleteCardAsync(string cardName, int cardId, string listName)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "deleted",
                 Previous = cardName,
                 Updated = "",
@@ -141,11 +147,12 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> LogMoveCardAsync(string cardName, string previousList, string newList)
+        public async Task<bool> LogMoveCardAsync(string cardName, int cardId, string previousList, string newList)
         {
             var activity = new Activity
             {
                 CardName = cardName,
+                CardId = cardId,
                 ActivityName = "moved",
                 Previous = previousList,
                 Updated = newList,

@@ -48,7 +48,12 @@
 </div>
 <div class="container">
     <div class="footer">
-        <button class="button save" (click)="createCard()" [disabled]="!createCardForm.valid">Create</button>
+        <button 
+            class="button save" 
+            [class.button-disabled]="!createCardForm.valid"
+            (click)="createCard()" 
+            [disabled]="!createCardForm.valid"
+        >Create</button>
         <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
     </div>
 </div>

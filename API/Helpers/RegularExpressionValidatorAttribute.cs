@@ -14,7 +14,7 @@ namespace API.Helpers
 
             if (validationContext.MemberName == nameof(UpdateCardDto.Priority) && !new[] { "Low", "Medium", "High" }.Contains(value.ToString()))
             {
-                return new ValidationResult("Priority must be Low, Medium, or High.");
+                return new ValidationResult("Priority must be Low, Medium, or High");
             }
 
             return ValidationResult.Success;

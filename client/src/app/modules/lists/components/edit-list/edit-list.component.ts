@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { ListsService } from '../../services/lists.service';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, switchMap } from 'rxjs';
@@ -8,12 +8,17 @@ import { finalize, switchMap } from 'rxjs';
   templateUrl: './edit-list.component.html',
   styleUrls: ['./edit-list.component.css']
 })
-export class EditListComponent {
+export class EditListComponent implements OnInit {
   @Output() changeEditMode = new EventEmitter();
   @Input() name?: string;
   @Input() id?: number;
+  initialName? = '';
 
   constructor(private listsService: ListsService, private toastr: ToastrService){}
+
+  ngOnInit(): void {
+    this.initialName = this.name;
+  }
     
   editList() {
     if (this.name && this.id){

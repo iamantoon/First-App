@@ -2,19 +2,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Helpers
 {
-    public class FutureDateAttribute : ValidationAttribute
+    public class ValidDateAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var dateValue = (DateOnly)value;
-            if (value is DateOnly && dateValue == DateOnly.MinValue) 
+            if (value is DateOnly dateValue && dateValue == DateOnly.MinValue) 
             {
                 return ValidationResult.Success; 
             }
 
-            if (dateValue < DateOnly.FromDateTime(DateTime.Today))
+            if (!(value is DateOnly))
             {
-                return new ValidationResult("Due date must be in the future." + dateValue + " " + value);
+                return new ValidationResult("Invalid due date format");
             }
 
             return ValidationResult.Success;

@@ -6,7 +6,12 @@
         [(ngModel)]="titleInput"
     >
     <div class="buttons">
-        <button class="button add" (click)="createNewList()">Add list</button>
+        <button 
+            class="button add" 
+            [class.button-disabled]="titleInput.length < 3"
+            (click)="createNewList()" 
+            [disabled]="titleInput.length < 3"
+        >Add list</button>
         <button class="button cancel" (click)="changeMode()">Cancel</button>
     </div>
 </div>
