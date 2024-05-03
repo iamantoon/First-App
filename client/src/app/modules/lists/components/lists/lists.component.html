@@ -1,12 +1,13 @@
 <div class="container" *ngIf="(this.listsService.lists$ | async) as lists">
     <app-list
-        *ngFor="let list of lists?.lists"
+        *ngFor="let list of lists?.lists; let i = index"
         [listName]="list.name"
         [listId]="list.id"
         [count]="list.cards.length"
         [cards]="list.cards"
         [lists]="lists.listNames"
         [priorities]="['Low', 'Medium', 'High']"
+        [ordinalNumber]="i + 1"
     ></app-list>
     <div>
         <app-add-list (changeEditMode)="changeMode()" *ngIf="createListMode"></app-add-list>

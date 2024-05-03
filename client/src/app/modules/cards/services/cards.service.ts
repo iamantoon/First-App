@@ -10,7 +10,7 @@ export class CardsService {
 
   constructor(private http: HttpClient){}
 
-  createCard(card: Card){
+  createCard(card: Partial<Card>){
     return this.http.post(this.baseUrl, card);
   }
 

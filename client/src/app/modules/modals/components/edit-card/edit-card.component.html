@@ -48,9 +48,7 @@
     <div class="footer">
         <button 
             class="button save" 
-            [class.button-disabled]="!editCardForm.dirty"
             (click)="saveChanges()" 
-            [disabled]="!editCardForm.dirty"
         >Save</button>
         <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
     </div>

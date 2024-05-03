@@ -5,7 +5,7 @@
             <button dropdownToggle class="button-toggle">
                 <i class="fa fa-ellipsis-v"></i>
             </button>
-            <div class="dropdown-menu" *dropdownMenu>
+            <div class="dropdown-menu" *dropdownMenu [class.dropdown-menu-right]="rightContextMenu">
                 <p class="dropdown-item" (click)="openEditModal()">
                     <i class="fa fa-edit"></i>
                     Edit
@@ -24,9 +24,12 @@
     </p>
     <span class="priority">• {{priority}}</span>
     <div class="dropdown" dropdown>
-        <button class="select" dropdownToggle>Move To</button>
+        <button class="select" dropdownToggle>
+            Move To
+            <i class="fa fa-caret-down"></i>
+        </button>
         <div class="dropdown-menu move" *dropdownMenu>
-            <p class="dropdown-item" *ngFor="let list of lists" (click)="moveTo(list.id)">{{list.name | titlecase}}</p>
+            <p class="dropdown-item" *ngFor="let list of lists" (click)="moveTo(list.id)">{{list.name}}</p>
         </div>
     </div>
 </div>

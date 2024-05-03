@@ -49,7 +49,6 @@ export class OpenCardComponent implements OnInit {
         priorities: this.priorities
       }
     }
-    // this.modalService.hide();
     this.bsModalRef.hide();
     this.bsModalRef = this.modalService.show(EditCardComponent, initialState);
   }

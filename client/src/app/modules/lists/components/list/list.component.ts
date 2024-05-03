@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Card } from 'src/app/modules/cards/models/card';
 import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add-card.component';
@@ -21,8 +21,10 @@ export class ListComponent {
   @Input() priorities: string[] = [];
   editListMode = false;
   bsModalRef: BsModalRef<AddCardComponent> = new BsModalRef<AddCardComponent>();
+  @Input() ordinalNumber?: number;
+  rightContextMenu = true;
 
-  constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService) {}
+  constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService){}
 
   deleteList(id: number) {
     this.listsService.deleteList(id).pipe(
@@ -49,5 +51,9 @@ export class ListComponent {
 
   changeEditMode(){
     this.editListMode = !this.editListMode;
+  }
+
+  isDivisibleByFour(num: number): boolean {
+    return num % 4 === 0;
   }
 }

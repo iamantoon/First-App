@@ -35,11 +35,13 @@ namespace API.Controllers
 
             var list = await _listRepository.FindListByIdAsync(createCardDto.ListId);
 
-            if (await _cardRepository.CreateCardAsync(card)) {
+            if (await _cardRepository.CreateCardAsync(card))
+            {
                 await _logActivityRepository.LogCreateCardAsync(card.Name, card.Id, list.Name);
-                return NoContent();
+                var cardDto = _mapper.Map<CardDto>(card);
+                return CreatedAtAction(nameof(GetCard), new { id = card.Id }, cardDto); // 201
             }
-        
+
             return BadRequest("Failed to create card");
         }
 
@@ -100,6 +102,18 @@ namespace API.Controllers
             }
 
             return BadRequest("Failed to delete card");
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CardDto>> GetCard(int id)
+        {
+            var card = await _cardRepository.FindCardByIdAsync(id);
+            if (card == null)
+            {
+                return NotFound(); 
+            }
+            var cardDto = _mapper.Map<CardDto>(card);
+            return Ok(cardDto);
         }
     }
 }

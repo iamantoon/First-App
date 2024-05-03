@@ -43,9 +43,11 @@ export class AddCardComponent implements OnInit {
   createCard() {
     if (this.createCardForm.valid) {
       const cardData = {
-        ...this.createCardForm.value,
-        listId: this.listId, 
-        dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate'])
+        name: this.createCardForm.value['name'],
+        listId: this.createCardForm.value['listInfo'].id, 
+        dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate']),
+        priority: this.createCardForm.value['priority'],
+        description: this.createCardForm.value['description']
       };
       this.cardsService.createCard(cardData).pipe(
         switchMap(() => this.listsService.getLists()),

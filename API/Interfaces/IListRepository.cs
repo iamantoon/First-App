@@ -6,6 +6,7 @@ namespace API.Interfaces
     public interface IListRepository
     {
         Task<IEnumerable<ListDto>> GetListsAsync();
+        Task<ListDto> GetListByIdAsync(int id);
         Task<IEnumerable<ListNamesDto>> GetNamesOfListsAsync();
         Task<bool> CreateListAsync(AppList list);
         Task<ListDto> UpdateListAsync();

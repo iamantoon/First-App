@@ -22,6 +22,7 @@ export class CardComponent {
   @Input() list?: string; // list name
   @Input() listId?: number; // list id
   @Input() lists: ListsWithIds[] = [];
+  @Input() rightContextMenu?: boolean;
   priorities = ['Low', 'Medium', 'High'];
   bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 

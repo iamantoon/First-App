@@ -24,6 +24,14 @@ namespace API.Data
                 .ToListAsync();   
         }
 
+        public async Task<ListDto> GetListByIdAsync(int id)
+        {
+            return await _context.Lists
+                .Where(l => l.Id == id)
+                .ProjectTo<ListDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<ListNamesDto>> GetNamesOfListsAsync()
         {
             return await _context.Lists

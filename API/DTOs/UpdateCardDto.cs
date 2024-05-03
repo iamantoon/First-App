@@ -9,10 +9,10 @@ namespace API.DTOs
         [Range(1, int.MaxValue, ErrorMessage = "Invalid Id")]
         public int Id { get; set; } 
 
-        [MaxLength(25, ErrorMessage = "Name must be no more than 25 characters")]
+        [MaxLength(55, ErrorMessage = "Name must be no more than 55 characters")]
         public string Name { get; set; }
 
-        [MaxLength(225, ErrorMessage = "Description must be no more than 225 characters")]
+        [MaxLength(285, ErrorMessage = "Description must be no more than 285 characters")]
         public string Description { get; set; }
 
         [ValidDate(ErrorMessage = "Invalid date")]

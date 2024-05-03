@@ -25,10 +25,24 @@ namespace API.Controllers
             return Ok(new {lists, listNames}); 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AppList>> CreateList(CreateListDto createListDto)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ListDto>> GetList(int id)
         {
-            if (await _listRepository.ListExists(createListDto.Name)) return BadRequest("This list already exists");
+            var list = await _listRepository.GetListByIdAsync(id);
+            if (list == null)
+            {
+                return NotFound("List not found");
+            }
+            return Ok(list);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CreateListDto>> CreateList(CreateListDto createListDto)
+        {
+            if (await _listRepository.ListExists(createListDto.Name))
+            {
+                return Conflict("This list already exists");
+            }
 
             var newList = new AppList
             {
@@ -36,10 +50,16 @@ namespace API.Controllers
                 Cards = new List<Card>()
             };
 
-            if (await _listRepository.CreateListAsync(newList)) return newList;
-        
-            return BadRequest("Failed to create list");
+            if (await _listRepository.CreateListAsync(newList))
+            {
+                return CreatedAtAction(nameof(GetList), new { id = newList.Id }, createListDto); // 201 Created
+            }
+            else
+            {
+                return BadRequest("Failed to create list");
+            }
         }
+
 
         [HttpPatch]
         public async Task<ActionResult> UpdateList(UpdateListDto updateListDto)

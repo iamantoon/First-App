@@ -6,7 +6,7 @@ namespace API.DTOs
     public class CreateCardDto
     {
         [Required] 
-        [MaxLength(25, ErrorMessage = "Name must be no more than 25 characters")]
+        [MaxLength(55, ErrorMessage = "Name must be no more than 55 characters")]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
