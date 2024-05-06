@@ -31,6 +31,6 @@ services:
 **Run Angular application locally**
 
 1. Go to the client folder and run ```npm install```
-2. Go to the file named environment.prod.ts and environment.ts and change the apiUrl field to ```http://localhost:5000/api/```
+2. Go to the files environment.prod.ts and environment.ts and change the apiUrl to ```http://localhost:5000/api/```
 3. Run the ```ng serve``` command
 4. Go to ```http://localhost:4200``` and test the application
