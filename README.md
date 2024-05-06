@@ -2,7 +2,7 @@
 
 1. Open a terminal from the root directory
 2. Run the ```docker-compose up --build``` command
-3. Go to http://localhost:8081/ to test my application
+3. Go to http://localhost:5200/ to test the application
 
 **Run backend locally**
 
