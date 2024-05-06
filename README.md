@@ -1,11 +1,11 @@
 **Run the application using Docker**
 
 1. Download the repo to your local machine
-2. Open a terminal from the root directory
+2. Open a terminal from the root (First-App-master) directory
 3. Run the ```docker-compose up --build``` command
 4. Go to http://localhost:5200/ to test the application
 
-**Run backend locally**
+**Run backend and database locally**
 
 1. Create ```docker-compose.yaml``` in the root directory
 2. Fill it with a code like this:
@@ -27,6 +27,7 @@ services:
 4. Install a Postgres extension for VS Code like PostgreSQL by Chris Kolkman
 5. Use the extension to connect to the database you just created
 6. Go to ```appsettins.Development.json``` and make sure the string describing a connection to database isn't wrong
+7. Run the ```dotnet run``` command
 
 **Run Angular application locally**
 
