@@ -69,25 +69,23 @@
 }
 
 .card-info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-    font-size: 0.95rem;
+    border-collapse: collapse; 
+    width: 65%;
 }
 
 .info {
-    display: flex;
-    column-gap: 20px;
+    border: none; 
 }
 
 .info__name {
     color: var(--font-grey);
     font-weight: 500;
     font-size: 0.9rem;
+    padding-left: 0;
 }
 
 .info__value {
-    color: var(--black);
+    padding: 8px; 
 }
 
 .modal__content {

@@ -2,6 +2,7 @@ using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data
 {
@@ -13,10 +14,9 @@ namespace API.Data
             _context = context;
         }
 
-        public async Task<bool> CreateCardAsync(Card card)
+        public async Task<EntityEntry<Card>> CreateCardAsync(Card card)
         {
-            await _context.Cards.AddAsync(card);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.Cards.AddAsync(card);
         }
         public Task<CardDto> UpdateCardAsync(UpdateCardDto card)
         {
@@ -36,14 +36,10 @@ namespace API.Data
         {
             return await _context.Cards.FindAsync(id);
         }
-
+        
         public void Update(Card card)
         {
              _context.Entry(card).State = EntityState.Modified;
-        }
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -4,6 +4,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data
 {
@@ -49,7 +50,7 @@ namespace API.Data
             return activities;
         }
 
-        public async Task<bool> LogChangeDescriptionAsync(string cardName, int cardId, string previousDescription, string newDescription)
+        public async Task<EntityEntry<Activity>> LogChangeDescriptionAsync(string cardName, int cardId, string previousDescription, string newDescription)
         {
             var activity = new Activity
             {
@@ -61,11 +62,10 @@ namespace API.Data
                 Date = DateTime.Now,
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogChangeDueDateAsync(string cardName, int cardId, DateOnly previousDate, DateOnly newDate)
+        public async Task<EntityEntry<Activity>> LogChangeDueDateAsync(string cardName, int cardId, DateOnly previousDate, DateOnly newDate)
         {
             var activity = new Activity
             {
@@ -77,11 +77,10 @@ namespace API.Data
                 Date = DateTime.Now,
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogChangeNameAsync(int cardId, string cardName, string newName)
+        public async Task<EntityEntry<Activity>> LogChangeNameAsync(int cardId, string cardName, string newName)
         {
             var activity = new Activity
             {
@@ -93,11 +92,10 @@ namespace API.Data
                 Date = DateTime.Now,
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogChangePriorityAsync(string cardName, int cardId, string previousPriority, string newPriority)
+        public async Task<EntityEntry<Activity>> LogChangePriorityAsync(string cardName, int cardId, string previousPriority, string newPriority)
         {
             var activity = new Activity
             {
@@ -109,11 +107,10 @@ namespace API.Data
                 Date = DateTime.Now,
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogCreateCardAsync(string cardName, int cardId, string listName)
+        public async Task<EntityEntry<Activity>> LogCreateCardAsync(string cardName, int cardId, string listName)
         {
             var activity = new Activity
             {
@@ -126,11 +123,10 @@ namespace API.Data
                 ListName = listName
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogDeleteCardAsync(string cardName, int cardId, string listName)
+        public async Task<EntityEntry<Activity>> LogDeleteCardAsync(string cardName, int cardId, string listName)
         {
             var activity = new Activity
             {
@@ -143,11 +139,10 @@ namespace API.Data
                 ListName = listName
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<bool> LogMoveCardAsync(string cardName, int cardId, string previousList, string newList)
+        public async Task<EntityEntry<Activity>> LogMoveCardAsync(string cardName, int cardId, string previousList, string newList)
         {
             var activity = new Activity
             {
@@ -159,13 +154,7 @@ namespace API.Data
                 Date = DateTime.Now,
             };
 
-            await _context.LoggedActivities.AddAsync(activity);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.LoggedActivities.AddAsync(activity);
         }
 
         public void Update(Activity activity)

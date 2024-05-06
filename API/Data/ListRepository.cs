@@ -4,6 +4,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace API.Data
 {
@@ -39,15 +40,14 @@ namespace API.Data
                 .ToListAsync();
         }
 
-        public async Task<bool> CreateListAsync(AppList list)
+        public async Task<EntityEntry<AppList>> CreateListAsync(AppList list)
         {
-            await _context.Lists.AddAsync(list);
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.Lists.AddAsync(list);
         }
 
         public Task<ListDto> UpdateListAsync()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); /// egeggeggrggregernrnrthrrththr
         }
 
         public bool DeleteList(AppList listToDelete)
@@ -71,11 +71,6 @@ namespace API.Data
             if (list != null) return true;
 
             return false;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
 
         public void Update(AppList list)

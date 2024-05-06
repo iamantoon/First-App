@@ -8,13 +8,12 @@
 <div class="body">
     <div class="container">
         <form class="section-edit" [formGroup]="createCardForm">
-            <input formControlName="name" class="input-name" placeholder="Name">
+            <input formControlName="name" class="input-name" placeholder="Enter name">
             <div>
                 <p>List</p>
                 <div class="btn-group" dropdown>
                     <button dropdownToggle class="select dropdown-toggle">
                         {{createCardForm.value['listInfo'] ? (createCardForm.value['listInfo'].name | titlecase) : 'Select list'}}
-                        <span class="caret"></span>
                     </button>
                     <ul *dropdownMenu class="dropdown-menu">
                         <li role="menuitem" *ngFor="let list of lists">
@@ -32,7 +31,6 @@
                 <div class="btn-group" dropdown>
                     <button dropdownToggle class="select dropdown-toggle">
                         {{createCardForm.value['priority'] ? createCardForm.value['priority'] : 'Select priority'}} 
-                        <span class="caret"></span>
                     </button>
                     <ul *dropdownMenu class="dropdown-menu">
                         <li role="menuitem" *ngFor="let priority of priorities">

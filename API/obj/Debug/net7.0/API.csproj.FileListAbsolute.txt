@@ -70,3 +70,5 @@ C:\internship\First App\API\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.d
 C:\internship\First App\API\bin\Debug\net7.0\AutoMapper.dll
 C:\internship\First App\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\internship\First App\API\bin\Debug\net7.0\Data\DataSeed.json
+C:\internship\First App\API\bin\Debug\net7.0\Npgsql.dll
+C:\internship\First App\API\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

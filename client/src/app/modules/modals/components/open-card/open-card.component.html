@@ -13,29 +13,29 @@
                     <h4 class="name">{{name}}</h4>
                     <button class="button" (click)="editCard()">Edit card</button>
                 </div>
-                <div class="card-info">
-                    <section class="info">
-                        <p class="info__name">
+                <table class="card-info">
+                    <tr class="info">
+                        <td class="info__name">
                             <i class="fa fa-list"></i>
                             List
-                        </p>
-                        <p class="info__value">{{list}}</p>
-                    </section>
-                    <section class="info">
-                        <p class="info__name">
+                        </td>
+                        <td class="info__value">{{list}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
                             <i class="fa fa-calendar-o"></i>
                             Due Date
-                        </p>
-                        <p class="info__value">{{dueDate | date}}</p>
-                    </section>
-                    <section class="info">
-                        <p class="info__name">
+                        </td>
+                        <td class="info__value">{{dueDate | date}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
                             <i class="fa fa-tag"></i>
                             Priority
-                        </p>
-                        <p class="info__value">{{priority}}</p>
-                    </section>
-                </div>
+                        </td>
+                        <td class="info__value">{{priority}}</td>
+                    </tr>
+                </table>                
                 <div class="description">
                     <h5 class="description__heading">Description</h5>
                     <p class="description__text">{{description}}</p>

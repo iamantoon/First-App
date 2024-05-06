@@ -8,16 +8,11 @@ namespace API.Controllers
 {
     public class CardsController : BaseApiController
     {
-        private readonly ICardRepository _cardRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogActivityRepository _logActivityRepository;
-        private readonly IListRepository _listRepository;
-        public CardsController(ICardRepository cardRepository, IMapper mapper, ILogActivityRepository logActivityRepository, 
-            IListRepository listRepository)
+        public CardsController(IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _cardRepository = cardRepository;
-            _logActivityRepository = logActivityRepository;
-            _listRepository = listRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -33,11 +28,15 @@ namespace API.Controllers
                 AppListId = createCardDto.ListId
             };
 
-            var list = await _listRepository.FindListByIdAsync(createCardDto.ListId);
+            var list = await _unitOfWork.ListRepository.FindListByIdAsync(createCardDto.ListId);
 
-            if (await _cardRepository.CreateCardAsync(card))
+            await _unitOfWork.CardRepository.CreateCardAsync(card);
+
+            if (_unitOfWork.HasChanges())
             {
-                await _logActivityRepository.LogCreateCardAsync(card.Name, card.Id, list.Name);
+                await _unitOfWork.Complete();
+                await _unitOfWork.LogActivityRepository.LogCreateCardAsync(card.Name, card.Id, list.Name);
+                await _unitOfWork.Complete();
                 var cardDto = _mapper.Map<CardDto>(card);
                 return CreatedAtAction(nameof(GetCard), new { id = card.Id }, cardDto); // 201
             }
@@ -48,39 +47,44 @@ namespace API.Controllers
         [HttpPatch]
         public async Task<ActionResult<CardDto>> UpdateCard(UpdateCardDto updateCardDto)
         {
-            var cardToUpdate = await _cardRepository.FindCardByIdAsync(updateCardDto.Id);
+            var cardToUpdate = await _unitOfWork.CardRepository.FindCardByIdAsync(updateCardDto.Id);
 
             if (cardToUpdate == null) return NotFound();
 
             if (updateCardDto.Name != null && updateCardDto.Name != cardToUpdate.Name){
-                await _logActivityRepository.LogChangeNameAsync(updateCardDto.Id, cardToUpdate.Name, updateCardDto.Name);
+                await _unitOfWork.LogActivityRepository.LogChangeNameAsync(updateCardDto.Id, cardToUpdate.Name, updateCardDto.Name);
                 cardToUpdate.Name = updateCardDto.Name;
+                await _unitOfWork.Complete();
             }
 
             if (updateCardDto.Description != null && updateCardDto.Description != cardToUpdate.Description){
-                await _logActivityRepository.LogChangeDescriptionAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Description, updateCardDto.Description);
+                await _unitOfWork.LogActivityRepository.LogChangeDescriptionAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Description, updateCardDto.Description);
                 cardToUpdate.Description = updateCardDto.Description;
+                await _unitOfWork.Complete();
             }
 
             if (updateCardDto.DueDate != default && updateCardDto.DueDate != cardToUpdate.DueDate){
-                await _logActivityRepository.LogChangeDueDateAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.DueDate, updateCardDto.DueDate);
+                await _unitOfWork.LogActivityRepository.LogChangeDueDateAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.DueDate, updateCardDto.DueDate);
                 cardToUpdate.DueDate = updateCardDto.DueDate;
+                await _unitOfWork.Complete();
             }
 
             if (updateCardDto.Priority != null && updateCardDto.Priority != cardToUpdate.Priority){
-                await _logActivityRepository.LogChangePriorityAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Priority, updateCardDto.Priority);
+                await _unitOfWork.LogActivityRepository.LogChangePriorityAsync(cardToUpdate.Name, updateCardDto.Id, cardToUpdate.Priority, updateCardDto.Priority);
                 cardToUpdate.Priority = updateCardDto.Priority;
+                await _unitOfWork.Complete();
             }
 
             if (updateCardDto.ListId > 0 && updateCardDto.ListId != cardToUpdate.AppListId){
-                var previousList = await _listRepository.FindListByIdAsync(cardToUpdate.AppListId);
-                var newList = await _listRepository.FindListByIdAsync(updateCardDto.ListId);
+                var previousList = await _unitOfWork.ListRepository.FindListByIdAsync(cardToUpdate.AppListId);
+                var newList = await _unitOfWork.ListRepository.FindListByIdAsync(updateCardDto.ListId);
             
-                await _logActivityRepository.LogMoveCardAsync(cardToUpdate.Name, updateCardDto.Id, previousList.Name, newList.Name);
+                await _unitOfWork.LogActivityRepository.LogMoveCardAsync(cardToUpdate.Name, updateCardDto.Id, previousList.Name, newList.Name);
                 cardToUpdate.AppListId = updateCardDto.ListId;
+                await _unitOfWork.Complete();
             }
 
-            await _cardRepository.SaveAllAsync();
+            await _unitOfWork.Complete();
 
             return _mapper.Map<CardDto>(cardToUpdate);
         }
@@ -88,16 +92,17 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteCard(int id)
         {
-            var cardToDelete = await _cardRepository.FindCardByIdAsync(id);
+            var cardToDelete = await _unitOfWork.CardRepository.FindCardByIdAsync(id);
 
             if (cardToDelete == null) return NotFound();
 
-            var list = await _listRepository.FindListByIdAsync(cardToDelete.AppListId);
+            var list = await _unitOfWork.ListRepository.FindListByIdAsync(cardToDelete.AppListId);
 
-            _cardRepository.DeleteCard(cardToDelete);
+            _unitOfWork.CardRepository.DeleteCard(cardToDelete);
 
-            if (await _cardRepository.SaveAllAsync()) {
-                await _logActivityRepository.LogDeleteCardAsync(cardToDelete.Name, id, list.Name);
+            if (_unitOfWork.HasChanges()) {
+                await _unitOfWork.LogActivityRepository.LogDeleteCardAsync(cardToDelete.Name, id, list.Name);
+                await _unitOfWork.Complete();
                 return Ok();
             }
 
@@ -107,7 +112,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CardDto>> GetCard(int id)
         {
-            var card = await _cardRepository.FindCardByIdAsync(id);
+            var card = await _unitOfWork.CardRepository.FindCardByIdAsync(id);
             if (card == null)
             {
                 return NotFound(); 

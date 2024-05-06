@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Activity, ActivityResponse } from '../models/activity';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  private baseUrl = 'http://localhost:5000/api/activity/';
+  baseUrl = environment.apiUrl + 'activity/';
 
   constructor(private http: HttpClient){}
 

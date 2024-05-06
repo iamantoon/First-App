@@ -6,18 +6,16 @@ namespace API.Controllers
 {
     public class ActivityController : BaseApiController
     {
-        private readonly ILogActivityRepository _logActivityRepository;
-        private readonly ICardRepository _cardRepository;
-        public ActivityController(ILogActivityRepository logActivityRepository, ICardRepository cardRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ActivityController(IUnitOfWork unitOfWork)
         {
-            _logActivityRepository = logActivityRepository;
-            _cardRepository = cardRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public async Task<ActionResult<ActivityResponseDto>> GetActivities(int pageSize = 20)
         {
-            var activities = await _logActivityRepository.GetActivitiesAsync(pageSize);
+            var activities = await _unitOfWork.LogActivityRepository.GetActivitiesAsync(pageSize);
 
             return Ok(activities);
         }
@@ -25,7 +23,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<ActivityDto>>> GetActivitesByCardId(int id)
         {
-            var activities = await _logActivityRepository.GetActivitiesByCardIdAsync(id);
+            var activities = await _unitOfWork.LogActivityRepository.GetActivitiesByCardIdAsync(id);
 
             return Ok(activities);
         }

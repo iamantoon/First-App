@@ -1,4 +1,4 @@
-<div>
+<div class="date-picker-container">
     <input
         type="text" 
         [class.is-invalid]="control.touched && control.invalid"
@@ -8,7 +8,5 @@
         bsDatepicker
         [bsConfig]="bsConfig"
     >
-    <div *ngIf="control.errors?.['required']" class="invalid-feedback">
-        Field is required
-    </div>
+    <span class="select-arrow"></span>
 </div>

@@ -4,6 +4,7 @@ namespace API.DTOs
     {
         public int Id { get; set; }
         public string CardName { get; set; }
+        public int CardId { get; set; }
         public string ActivityName { get; set; }
         public string Previous { get; set; }
         public string Updated { get; set; }
