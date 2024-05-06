@@ -1,8 +1,9 @@
 **Run the application using Docker**
 
-1. Open a terminal from the root directory
-2. Run the ```docker-compose up --build``` command
-3. Go to http://localhost:5200/ to test the application
+1. Down the repo to your local machine
+2. Open a terminal from the root directory
+3. Run the ```docker-compose up --build``` command
+4. Go to http://localhost:5200/ to test the application
 
 **Run backend locally**
 
