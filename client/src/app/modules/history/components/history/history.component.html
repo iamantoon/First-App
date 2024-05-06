@@ -1,0 +1,29 @@
+<div class="history">
+    <div class="history-header">
+        <div class="container">
+            <section class="history-top">
+                <h5 class="title">History</h5>
+                <button (click)="hide()" >
+                    <i class="fa fa-times white"></i>
+                </button>
+            </section>
+        </div>
+    </div>
+    <div class="history-body">
+        <div class="content-container">
+            <ul class="history-content scroll-wrapper">
+                <li *ngFor="let activity of loggedActivity">
+                    <app-activity 
+                        [cardName]="activity.cardName"
+                        [activityName]="activity.activityName"
+                        [date]="activity.date"
+                        [previousValue]="activity.previous"
+                        [updatedValue]="activity.updated"
+                        [listName]="activity.listName"
+                    ></app-activity>
+                </li>
+                <button class="button" *ngIf="totalCount && pageSize && totalCount > pageSize" (click)="showMore()">Show more</button>
+            </ul>
+        </div>
+    </div>
+</div>

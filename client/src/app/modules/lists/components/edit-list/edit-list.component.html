@@ -1,0 +1,18 @@
+<div class="container">
+    <input 
+        class="input" 
+        name="title" 
+        placeholder="Enter list title..."
+        [(ngModel)]="name"
+    >
+    <div class="buttons">
+        <button 
+            class="button add" 
+            [class.button-disabled]="initialName === name"
+            (click)="editList()" 
+            [disabled]="initialName === name"
+            disabled="{{initialName === name}}"
+        >Save</button>
+        <button class="button cancel" (click)="changeMode()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="container">
+        <form class="section-edit" [formGroup]="createCardForm">
+            <input formControlName="name" class="input-name" placeholder="Enter name">
+            <div>
+                <p>List</p>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle class="select dropdown-toggle">
+                        {{createCardForm.value['listInfo'] ? (createCardForm.value['listInfo'].name | titlecase) : 'Select list'}}
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu">
+                        <li role="menuitem" *ngFor="let list of lists">
+                            <p class="dropdown-item" (click)="changeList(list)">{{list.name | titlecase}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <p>Due Date</p>
+                <app-date-picker [formControl]="$any(createCardForm.controls['dueDate'])"></app-date-picker>
+            </div>
+            <div>
+                <p>Priority</p>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle class="select dropdown-toggle">
+                        {{createCardForm.value['priority'] ? createCardForm.value['priority'] : 'Select priority'}} 
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu">
+                        <li role="menuitem" *ngFor="let priority of priorities">
+                            <p class="dropdown-item" (click)="changePriority(priority)">{{priority}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>Description</p>
+            <textarea class="description" formControlName="description"></textarea>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="footer">
+        <button 
+            class="button save" 
+            [class.button-disabled]="!createCardForm.valid"
+            (click)="createCard()" 
+            [disabled]="!createCardForm.valid"
+        >Create</button>
+        <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
+    </div>
+</div>

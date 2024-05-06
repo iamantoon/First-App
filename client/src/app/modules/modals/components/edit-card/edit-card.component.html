@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="container">
+        <form [formGroup]="editCardForm" class="section-edit">
+            <input formControlName="name" class="input-name">
+            <div>
+                <p>List</p>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle class="select dropdown-toggle">
+                        {{editCardForm.value['listInfo'].name}} <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu">
+                        <li role="menuitem" *ngFor="let item of lists">
+                            <p class="dropdown-item" (click)="changeList(item)">{{item.name}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <p>Due Date</p>
+                <app-date-picker [formControl]="$any(editCardForm.controls['dueDate'])"></app-date-picker>
+            </div>
+            <div>
+                <p>Priority</p>
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle class="select dropdown-toggle">
+                        {{editCardForm.value['priority']}} <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu">
+                        <li role="menuitem" *ngFor="let priority of priorities">
+                            <p class="dropdown-item" (click)="changePriority(priority)">{{priority}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>Description</p>
+            <textarea formControlName="description" class="description">{{description}}</textarea>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="footer">
+        <button 
+            class="button save" 
+            (click)="saveChanges()" 
+        >Save</button>
+        <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
+    </div>
+</div>

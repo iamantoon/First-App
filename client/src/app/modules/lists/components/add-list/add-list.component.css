@@ -1,0 +1,42 @@
+.input {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    padding: 4px 3px;
+    background-color: var(--priority-grey);
+    border: 1px solid var(--border-grey);
+}
+
+input::placeholder {
+    color: var(--black);
+}
+
+.buttons {
+    display: flex;
+    column-gap: 5px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px 19px;
+    border-radius: 5px;
+}
+
+.add {
+    background-color: var(--blue);
+    color: var(--white);
+    border: 1px solid var(--blue);
+}
+
+.cancel {
+    background-color: var(--white);
+    color: var(--black);
+    border: 1px solid var(--border-grey);
+}
+
+.button-disabled {
+    background-color: var(--blue-disabled);
+    border: 1px solid var(--blue-disabled);
+}

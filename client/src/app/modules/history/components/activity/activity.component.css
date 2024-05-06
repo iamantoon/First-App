@@ -1,0 +1,19 @@
+.info {
+    color: var(--font-grey);
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.card-name {
+    color: var(--black);
+    font-weight: 500;
+}
+
+.date {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.important {
+    font-weight: 500;
+}

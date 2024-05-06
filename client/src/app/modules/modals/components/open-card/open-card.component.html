@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="modal__content">
+        <div class="modal__body">
+            <div class="container">
+                <div class="modal__header">
+                    <h4 class="name">{{name}}</h4>
+                    <button class="button" (click)="editCard()">Edit card</button>
+                </div>
+                <table class="card-info">
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-list"></i>
+                            List
+                        </td>
+                        <td class="info__value">{{list}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-calendar-o"></i>
+                            Due Date
+                        </td>
+                        <td class="info__value">{{dueDate | date}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-tag"></i>
+                            Priority
+                        </td>
+                        <td class="info__value">{{priority}}</td>
+                    </tr>
+                </table>                
+                <div class="description">
+                    <h5 class="description__heading">Description</h5>
+                    <p class="description__text">{{description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal__activity">
+            <div class="container">
+                <h4 class="name">Activity</h4>
+                <ul class="activity__list">
+                    <app-activity 
+                        *ngFor="let activity of activities"
+                        [cardName]="activity.cardName"
+                        [activityName]="activity.activityName"
+                        [date]="activity.date"
+                        [previousValue]="activity.previous"
+                        [updatedValue]="activity.updated"
+                        [listName]="activity.listName"
+                    ></app-activity>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

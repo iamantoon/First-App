@@ -1,18 +1,18 @@
-<div class="container">
+<div class="container" *ngIf="!editListMode">
     <header class="header">
-        <h5 class="list-name">{{list}}</h5>
+        <h5 class="list-name">{{listName}}</h5>
         <div class="header__button">
             <p class="count">{{count}}</p>
             <div class="dropdown" dropdown>
                 <button dropdownToggle class="button-toggle">
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
-                <div class="dropdown-menu" *dropdownMenu>
-                    <p class="dropdown-item">
+                <div class="dropdown-menu" *dropdownMenu [class.dropdown-menu-right]="isDivisibleByFour(ordinalNumber!)">
+                    <p class="dropdown-item" (click)="changeEditMode()">
                         <i class="fa fa-edit"></i>
                         Edit
                     </p>
-                    <p class="dropdown-item delete">
+                    <p class="dropdown-item delete" (click)="deleteList(listId!)">
                         <i class="fa fa-trash"></i>
                         Delete
                     </p>
@@ -20,28 +20,23 @@
             </div>
         </div>
     </header>
-    <button class="button">+ Add new card</button>
-    <div>
-        <app-card 
-            [name]="'English'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
-            [dueDate]="'Saturday, 28 Apr'"
-            [priority]="'Low'"
-            (moveTo)="moveTo($event)"
-        ></app-card>
+    <button class="button" (click)="openCreateCardModal()">+ Add new card</button>
+    <div *ngIf="!editListMode">
         <app-card
-            [name]="'Programming'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual'"
-            [dueDate]="'Friday, 26 Apr'"
-            [priority]="'Medium'"
-            (moveTo)="moveTo($event)"
-        ></app-card>
-        <app-card
-            [name]="'History'" 
-            [description]="'Task descriptions should be unambiguous, accurate, factual, comprehensive, correct and uniformly designed'"
-            [dueDate]="'Sunday, 27 Apr'"
-            [priority]="'High'"
-            (moveTo)="moveTo($event)"
+            *ngFor="let card of cards; let i = index"
+            [id]="card.id"
+            [name]="card.name" 
+            [description]="card.description"
+            [dueDate]="card.dueDate"
+            [priority]="card.priority"
+            [list]="listName"
+            [listId]="listId"
+            [lists]="lists"
+            [rightContextMenu]="isDivisibleByFour(ordinalNumber!)"
         ></app-card>
     </div>
+</div>
+
+<div class="container" *ngIf="editListMode">
+    <app-edit-list [name]="listName" [id]="listId" (changeEditMode)="changeEditMode()"></app-edit-list>
 </div>

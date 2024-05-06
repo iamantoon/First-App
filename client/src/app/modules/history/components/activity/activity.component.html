@@ -1,0 +1,24 @@
+<section class="activity" *ngIf="activityName === 'added'">
+    <h5 class="info">• You {{activityName}} <span class="card-name">{{cardName}}</span> to <span class="important">{{listName}}</span></h5>
+    <i class="date">{{date | date:'MMMM d, y \'at\' HH:mm' }}</i>
+</section>
+
+<section class="activity" *ngIf="activityName === 'renamed'">
+    <h5 class="info">• You {{activityName}} <span class="card-name">{{previousValue}}</span> to <span class="important">{{updatedValue}}</span></h5>
+    <i class="date">{{date | date:'MMMM d, y \'at\' HH:mm' }}</i>
+</section>
+
+<section class="activity" *ngIf="activityName === 'deleted'">
+    <h5 class="info">• You {{activityName}} <span class="card-name">{{cardName}}</span> from <span class="important">{{listName}}</span></h5>
+    <i class="date">{{date | date:'MMMM d, y \'at\' HH:mm' }}</i>
+</section>
+
+<section class="activity" *ngIf="activityName === 'changed the priority' || activityName === 'changed the date' || activityName === 'changed the description'">
+    <h5 class="info">• You {{activityName}} <span class="card-name">{{cardName}}</span> from <span class="important">{{previousValue}}</span> to <span class="important">{{updatedValue}}</span></h5>
+    <i class="date">{{date | date:'MMMM d, y \'at\' HH:mm' }}</i>
+</section>
+
+<section class="activity" *ngIf="activityName === 'moved'">
+    <h5 class="info">• You {{activityName}} <span class="card-name">{{cardName}}</span> from <span class="important">{{previousValue}}</span> to <span class="important">{{updatedValue}}</span></h5>
+    <i class="date">{{date | date:'MMMM d, y \'at\' HH:mm' }}</i>
+</section>

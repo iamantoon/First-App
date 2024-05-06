@@ -1,0 +1,12 @@
+<div class="date-picker-container">
+    <input
+        type="text" 
+        [class.is-invalid]="control.touched && control.invalid"
+        class="select"
+        [formControl]="control"
+        [placeholder]="'Select dates'"
+        bsDatepicker
+        [bsConfig]="bsConfig"
+    >
+    <span class="select-arrow"></span>
+</div>

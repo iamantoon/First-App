@@ -12,6 +12,16 @@
     font-size: 1.1rem;
 }
 
+.count {
+    margin-right: 10px;
+}
+
+.button-toggle {
+    width: 15px;
+    background-color: rbga(255, 255, 255, 0);
+    border: none;
+}
+
 .header__button {
     display: flex;
     align-items: center;
@@ -22,16 +32,6 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-}
-
-.button-toggle {
-    width: 15px;
-    background-color: var(--white);
-    border: none;
-}
-
-.count {
-    margin-right: 10px;
 }
 
 .button {
@@ -53,5 +53,9 @@
 }
 
 .dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
+
+.pointer {
     cursor: pointer;
 }
