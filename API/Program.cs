@@ -13,15 +13,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
-    .WithOrigins("http://localhost:4200", "http://localhost:8081"));
-
+    .WithOrigins("http://localhost:4200", "http://localhost:5200"));
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
