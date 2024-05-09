@@ -6,7 +6,7 @@ import { EditCardComponent } from 'src/app/modules/modals/components/edit-card/e
 import { OpenCardComponent } from 'src/app/modules/modals/components/open-card/open-card.component';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { switchMap } from 'rxjs';
-import { ListsService } from 'src/app/modules/lists/services/lists.service';
+import { BoardsService } from 'src/app/modules/boards/services/boards.service';
 
 @Component({
   selector: 'app-card',
@@ -21,20 +21,21 @@ export class CardComponent {
   @Input() priority?: string;
   @Input() list?: string; // list name
   @Input() listId?: number; // list id
+  @Input() boardId?: number;
   @Input() lists: ListsWithIds[] = [];
   @Input() rightContextMenu?: boolean;
   priorities = ['Low', 'Medium', 'High'];
   bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 
-  constructor(private cardsService: CardsService, private modalService: BsModalService, 
-    private toastr: ToastrService, private listsService: ListsService){}
+  constructor(private cardsService: CardsService, private boardsService: BoardsService, private modalService: BsModalService, 
+    private toastr: ToastrService){}
 
   moveTo(move: number) {
-    this.cardsService.editCard(this.id!, {listId: move}).pipe(
-      switchMap(() => this.listsService.getLists())
+    this.cardsService.editCard(this.id!, {listId: move, boardId: this.boardId}).pipe(
+      switchMap(() => this.boardsService.getBoard(this.boardId!))
     ).subscribe({
       next: response => {
-        this.listsService.setLists(response);
+        this.boardsService.setBoard(response);
         this.toastr.success(`Card ${this.name} has been moved`);
       }
     });
@@ -42,10 +43,10 @@ export class CardComponent {
 
   deleteCard(id: number) {
     this.cardsService.deleteCard(id).pipe(
-      switchMap(() => this.listsService.getLists())
+      switchMap(() => this.boardsService.getBoard(this.boardId!))
     ).subscribe({
       next: response => {
-        this.listsService.setLists(response);
+        this.boardsService.setBoard(response);
         this.toastr.success(`Card ${this.name} has been deleted`);
       }
     });
@@ -61,6 +62,7 @@ export class CardComponent {
         priority: this.priority,
         listName: this.list,
         listId: this.listId,
+        boardId: this.boardId,
         lists: this.lists,
         priorities: this.priorities
       }
@@ -78,6 +80,7 @@ export class CardComponent {
         priority: this.priority,
         list: this.list,
         listId: this.listId,
+        boardId: this.boardId,
         lists: this.lists,
         priorities: this.priorities
       },

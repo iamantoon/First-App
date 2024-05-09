@@ -11,8 +11,9 @@ export class HistoryService {
 
   constructor(private http: HttpClient){}
 
-  getLoggedActivity(pageSize: number){  
+  getLoggedActivity(boardId: number, pageSize: number){  
     let params = new HttpParams().set('pageSize', pageSize.toString());
+    params = params.set('boardId', boardId.toString());
 
     return this.http.get<ActivityResponse>(this.baseUrl, {params});
   }

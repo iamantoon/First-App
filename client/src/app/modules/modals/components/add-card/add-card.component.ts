@@ -7,6 +7,7 @@ import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { FormatDateService } from '../../services/format-date.service';
 import { ListsService } from 'src/app/modules/lists/services/lists.service';
 import { catchError, of, switchMap } from 'rxjs';
+import { BoardsService } from 'src/app/modules/boards/services/boards.service';
 
 @Component({
   selector: 'app-add-card',
@@ -18,11 +19,12 @@ export class AddCardComponent implements OnInit {
   lists: ListsWithIds[] = [];
   priorities: string[] = [];
   listId?: number;
+  boardId?: number;
   listName?: string;
   minDate: Date = new Date();
   listObject: any = {};
 
-  constructor(private cardsService: CardsService, public bsModalRef: BsModalRef, private toastr: ToastrService,
+  constructor(private cardsService: CardsService, private boardsService: BoardsService, public bsModalRef: BsModalRef, private toastr: ToastrService,
     private formatDateService: FormatDateService, private listsService: ListsService) {}
 
   ngOnInit(): void {
@@ -44,26 +46,27 @@ export class AddCardComponent implements OnInit {
     if (this.createCardForm.valid) {
       const cardData = {
         name: this.createCardForm.value['name'],
-        listId: this.createCardForm.value['listInfo'].id, 
+        description: this.createCardForm.value['description'],
         dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate']),
         priority: this.createCardForm.value['priority'],
-        description: this.createCardForm.value['description']
+        listId: this.createCardForm.value['listInfo'].id, 
+        boardId: this.boardId
       };
       this.cardsService.createCard(cardData).pipe(
-        switchMap(() => this.listsService.getLists()),
+        switchMap(() => this.boardsService.getBoard(this.boardId!)),
         catchError(error => {
           this.toastr.error("Failed to create card: " + error.message);
           return of(null);
         })
       ).subscribe(response => {
         if (response) {
-          this.listsService.setLists(response);
+          this.boardsService.setBoard(response);
           this.toastr.success("Card has been created");
         }
       });
       this.bsModalRef.hide();
     } else {
-      this.toastr.error('Please fill all required fields');
+      this.toastr.error('Please fill all fields');
     }
   }
 

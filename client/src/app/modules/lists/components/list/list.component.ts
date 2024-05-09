@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Card } from 'src/app/modules/cards/models/card';
 import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add-card.component';
@@ -6,6 +6,7 @@ import { ListsService } from '../../services/lists.service';
 import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from '../../models/list';
 import { switchMap } from 'rxjs';
+import { BoardsService } from 'src/app/modules/boards/services/boards.service';
 
 @Component({
   selector: 'app-list',
@@ -15,6 +16,7 @@ import { switchMap } from 'rxjs';
 export class ListComponent {
   @Input() listName?: string;
   @Input() listId?: number;
+  @Input() boardId?: number;
   @Input() count?: number;
   @Input() cards: Card[] = [];
   @Input() lists: ListsWithIds[] = [];
@@ -24,15 +26,15 @@ export class ListComponent {
   @Input() ordinalNumber?: number;
   rightContextMenu = true;
 
-  constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService){}
+  constructor(private listsService: ListsService, private boardsService: BoardsService, private modalService: BsModalService, private toastr: ToastrService){}
 
   deleteList(id: number) {
     this.listsService.deleteList(id).pipe(
-      switchMap(() => this.listsService.getLists())
+      switchMap(() => this.boardsService.getBoard(this.boardId!))
     ).subscribe({
       next: response => {
-        this.listsService.setLists(response);
-        this.toastr.success(`List has been deleted`);
+        this.boardsService.boardSubject.next(response);
+        this.toastr.success('List has been deleted');
       }
     });
   } 
@@ -43,6 +45,7 @@ export class ListComponent {
         lists: this.lists,
         priorities: this.priorities,
         listId: this.listId,
+        boardId: this.boardId,
         listName: this.listName
       }
     }

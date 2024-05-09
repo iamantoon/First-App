@@ -15,3 +15,13 @@ export interface ListsWithIds {
     id: number;
     name: string;
 }
+
+export interface CreateList {
+    name: string;
+    boardId: number;
+}
+
+export interface EditList {
+    listId: number;
+    name: string;
+}

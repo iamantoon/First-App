@@ -1,9 +1,2 @@
 <ngx-spinner type="timer"></ngx-spinner>
-<div class="container">
-    <header class="header">
-        <h2 class="title">My Task Board</h2>
-        <button class="button" (click)="toggleHistory()">History</button>
-    </header>
-    <app-history *ngIf="isHistoryVisible" (hideHistory)="toggleHistory()"></app-history>
-    <app-lists></app-lists>
-</div>
+<router-outlet></router-outlet>

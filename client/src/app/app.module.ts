@@ -12,10 +12,13 @@ import { LoadingInterceptor } from './modules/core/interceptors/loading.intercep
 import { ErrorInterceptor } from './modules/core/interceptors/error.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalsModule } from './modules/modals/modals.module';
+import { BoardsModule } from './modules/boards/boards.module';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,10 @@ import { ModalsModule } from './modules/modals/modals.module';
     ModalsModule,
     CoreModule,
     ListsModule,
-    HistoryModule
+    HistoryModule,
+    BoardsModule,
+    AppRoutingModule,
+    HomeModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},

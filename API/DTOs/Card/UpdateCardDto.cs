@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using API.Helpers;
 
-namespace API.DTOs
+namespace API.DTOs.Card
 {
     public class UpdateCardDto
     {
@@ -21,7 +21,9 @@ namespace API.DTOs
         [RegularExpressionValidator]
         public string Priority { get; set; }
 
-        [ListIdValidator(ErrorMessage = "Invalid ListId")]
+        [CustomIdValidator(ErrorMessage = "Invalid ListId")]
         public int ListId { get; set; }
+        [CustomIdValidator(ErrorMessage = "Invalid BoardId")]
+        public int BoardId { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Helpers
 {
-    public class ListIdValidatorAttribute : ValidationAttribute
+    public class CustomIdValidatorAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

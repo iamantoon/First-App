@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Lists } from '../models/list';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { CreateList, EditList } from '../models/list';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,30 +8,15 @@ import { environment } from 'src/environments/environment';
 })
 export class ListsService {
   baseUrl = environment.apiUrl + 'lists/';
-  listsSubject: BehaviorSubject<Lists> = new BehaviorSubject<Lists>({lists: [], listNames: []});
-  lists$: Observable<Lists> = this.listsSubject.asObservable(); 
 
   constructor(private http: HttpClient){}
 
-  getLists(){
-    return this.http.get<Lists>(this.baseUrl).pipe(
-      map(response => {
-        this.listsSubject.next(response);
-        return response;
-      })
-    )
+  createList(newList: CreateList){
+    return this.http.post(this.baseUrl, {name: newList.name, boardId: newList.boardId});
   }
 
-  setLists(lists: Lists){
-    this.listsSubject.next(lists);
-  }
-
-  createList(name: string){
-    return this.http.post(this.baseUrl, {name});
-  }
-
-  editList(id: number, name: string){
-    return this.http.patch(this.baseUrl, {id, name});
+  editList(editedList: EditList){
+    return this.http.patch(this.baseUrl, {id: editedList.listId, name: editedList.name});
   }
 
   deleteList(id: number){

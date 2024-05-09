@@ -10,11 +10,16 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { HistoryModule } from '../history/history.module';
 import { ListsModule } from '../lists/lists.module';
 
+import { CreateBoardComponent } from './components/create-board/create-board.component';
+import { EditBoardComponent } from './components/edit-board/edit-board.component';
+
 @NgModule({
   declarations: [
     AddCardComponent,
     EditCardComponent,
     OpenCardComponent,
+    EditBoardComponent,
+    CreateBoardComponent,
   ],
   imports: [
     CommonModule,

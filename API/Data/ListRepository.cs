@@ -1,10 +1,10 @@
-using API.DTOs;
-using API.Entities;
-using API.Interfaces;
-using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using API.Interfaces;
+using API.DTOs.List;
+using API.Entities;
+using AutoMapper;
 
 namespace API.Data
 {
@@ -18,9 +18,10 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ListDto>> GetListsAsync()
+        public async Task<IEnumerable<ListDto>> GetListsAsync(int boardId)
         {
             return await _context.Lists
+                .Where(l => l.AppBoardId == boardId)
                 .ProjectTo<ListDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();   
         }
@@ -33,9 +34,10 @@ namespace API.Data
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ListNamesDto>> GetNamesOfListsAsync()
+        public async Task<IEnumerable<ListNamesDto>> GetNamesOfListsAsync(int boardId)
         {
             return await _context.Lists
+                .Where(l => l.Id == boardId)
                 .Select(list => new ListNamesDto { Id = list.Id, Name = list.Name })
                 .ToListAsync();
         }
@@ -43,11 +45,6 @@ namespace API.Data
         public async Task<EntityEntry<AppList>> CreateListAsync(AppList list)
         {
             return await _context.Lists.AddAsync(list);
-        }
-
-        public Task<ListDto> UpdateListAsync()
-        {
-            throw new NotImplementedException(); /// egeggeggrggregernrnrthrrththr
         }
 
         public bool DeleteList(AppList listToDelete)
@@ -64,13 +61,11 @@ namespace API.Data
             return await _context.Lists.FindAsync(id);
         }
 
-        public async Task<bool> ListExists(string name)
+        public async Task<bool> ListExistsAsync(string name, int boardId)
         {
-            var list = await _context.Lists.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+            var listNames = await GetNamesOfListsAsync(boardId).ConfigureAwait(false);
 
-            if (list != null) return true;
-
-            return false;
+            return listNames.Any(list => string.Equals(list.Name, name));
         }
 
         public void Update(AppList list)

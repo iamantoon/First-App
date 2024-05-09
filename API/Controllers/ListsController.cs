@@ -1,7 +1,7 @@
-using API.DTOs;
-using API.Entities;
-using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using API.Interfaces;
+using API.Entities;
+using API.DTOs.List;
 
 namespace API.Controllers
 {
@@ -13,11 +13,11 @@ namespace API.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ListToReturnDto>>> GetLists()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<ListToReturnDto>>> GetListsByBoardId(int boardId)
         {
-            var lists = await _unitOfWork.ListRepository.GetListsAsync();
-            var listNames = await _unitOfWork.ListRepository.GetNamesOfListsAsync();
+            var lists = await _unitOfWork.ListRepository.GetListsAsync(boardId);
+            var listNames = await _unitOfWork.ListRepository.GetNamesOfListsAsync(boardId);
 
             return Ok(new {lists, listNames}); 
         }
@@ -25,15 +25,16 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<CreateListDto>> CreateList(CreateListDto createListDto)
         {
-            if (await _unitOfWork.ListRepository.ListExists(createListDto.Name))
+            if (await _unitOfWork.ListRepository.ListExistsAsync(createListDto.Name, createListDto.BoardId))
             {
-                return Conflict("This list already exists");
+                return Conflict("This list already exists on this board");
             }
 
             var newList = new AppList
             {
                 Name = createListDto.Name,
-                Cards = new List<Card>()
+                Cards = new List<Card>(),
+                AppBoardId = createListDto.BoardId
             };
 
             await _unitOfWork.ListRepository.CreateListAsync(newList);
@@ -41,14 +42,13 @@ namespace API.Controllers
             if (_unitOfWork.HasChanges())
             {
                 await _unitOfWork.Complete();
-                return CreatedAtAction(nameof(GetList), new { id = newList.Id }, createListDto); // 201 Created
+                return CreatedAtAction(nameof(GetList), new { id = newList.Id }, createListDto);
             }
             else
             {
                 return BadRequest("Failed to create list");
             }
         }
-
 
         [HttpPatch]
         public async Task<ActionResult> UpdateList(UpdateListDto updateListDto)
@@ -59,19 +59,21 @@ namespace API.Controllers
 
             list.Name = updateListDto.Name;
 
-            if (await _unitOfWork.Complete()) return NoContent(); // 204
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to update list");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/list/{id}")]
         public async Task<ActionResult<ListDto>> GetList(int id)
         {
             var list = await _unitOfWork.ListRepository.GetListByIdAsync(id);
+
             if (list == null)
             {
                 return NotFound("List not found");
             }
+
             return Ok(list);
         }
 

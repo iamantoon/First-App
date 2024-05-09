@@ -13,5 +13,7 @@ namespace API.Entities
         
         public int AppListId { get; set; }
         public AppList AppList { get; set; }
+        public int AppBoardId { get; set; }
+        public AppBoard AppBoard { get; set; }
     }
 }

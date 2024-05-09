@@ -1,0 +1,28 @@
+<div class="board-item" *ngIf="id">
+    <div class="board-item-header">
+        <div></div>
+        <div class="dropdown" dropdown>
+            <button dropdownToggle class="button-toggle">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu" *dropdownMenu>
+                <p class="dropdown-item" [routerLink]="['/boards', id]">
+                    <i class="fa fa-external-link"></i>
+                    Open board
+                </p>
+                <p class="dropdown-item" (click)="editBoardModal(id, name)">
+                    <i class="fa fa-edit"></i>
+                    Edit board
+                </p>
+                <p class="dropdown-item delete" (click)="deleteBoard(id)">
+                    <i class="fa fa-trash"></i>
+                    Delete board
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="board-item-name" [routerLink]="['/boards', id]">
+        <h5 class="board-item-text">{{name}}</h5>
+    </div>
+    <div [routerLink]="['/boards', id]" style="margin-top: 5px;"></div>
+</div>
