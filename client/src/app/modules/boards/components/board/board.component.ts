@@ -5,8 +5,11 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { CreateBoardComponent } from 'src/app/modules/modals/components/create-board/create-board.component';
 import { EditBoardComponent } from 'src/app/modules/modals/components/edit-board/edit-board.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, of, switchMap, take, throwError } from 'rxjs';
+import { take } from 'rxjs';
 import { Location } from '@angular/common';
+import { Store, select } from '@ngrx/store';
+import { deleteBoard, getBoard } from 'src/app/modules/core/store/actions/boards.action';
+import { selectBoard, selectSortedBoard } from 'src/app/modules/core/store/selectors/board.selector';
 
 @Component({
   selector: 'app-board',
@@ -17,37 +20,25 @@ export class BoardComponent implements OnInit {
   bsModalRef: BsModalRef<CreateBoardComponent | EditBoardComponent> = new BsModalRef<CreateBoardComponent | EditBoardComponent>();
   isHistoryVisible = false;
   
-  constructor(public boardsService: BoardsService, private activatedRoute: ActivatedRoute, private router: Router, 
+  constructor(public boardsService: BoardsService, private store: Store, private activatedRoute: ActivatedRoute, private router: Router, 
       private toastr: ToastrService, private modalService: BsModalService, private location: Location){}
 
+  // board$ = this.store.pipe(select(selectBoard));
+  board$ = this.store.pipe(select(selectSortedBoard));
+  
   ngOnInit(): void {
     this.getBoard();
   }
 
   getBoard(){
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) this.boardsService.getBoard(+id).subscribe({
-      next: board => this.boardsService.setBoard(board)
-    })
+    if (id) this.store.dispatch(getBoard({id: +id}));
   }
 
   deleteBoard() {
-    this.boardsService.board$.pipe(
-      take(1),
-      switchMap(board => {
-        if (!board) {
-          return throwError('Board not found');
-        }
-        return this.boardsService.deleteBoard(board.id);
-      }),
-      catchError(error => {
-        this.toastr.error('Failed to delete board');
-        return of(null);
-      })
-    ).subscribe(() => {
-      this.toastr.success('Board has been successfully deleted');
-      this.router.navigateByUrl('/');
-    });
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.store.dispatch(deleteBoard({id: +id!}));
+    this.router.navigateByUrl('/');
   }
 
   createBoardModal(){

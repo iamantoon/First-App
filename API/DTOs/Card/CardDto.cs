@@ -7,5 +7,6 @@ namespace API.DTOs.Card
         public string Description { get; set; }
         public DateOnly DueDate { get; set; }
         public string Priority { get; set; }
+        public int AppListId { get; set; }
     }
 }

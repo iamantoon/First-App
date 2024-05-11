@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CardsService } from 'src/app/modules/cards/services/cards.service';
 import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { FormatDateService } from '../../services/format-date.service';
-import { ListsService } from 'src/app/modules/lists/services/lists.service';
-import { catchError, of, switchMap } from 'rxjs';
-import { BoardsService } from 'src/app/modules/boards/services/boards.service';
+import { Store } from '@ngrx/store';
+import { createCard } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-add-card',
@@ -24,8 +22,7 @@ export class AddCardComponent implements OnInit {
   minDate: Date = new Date();
   listObject: any = {};
 
-  constructor(private cardsService: CardsService, private boardsService: BoardsService, public bsModalRef: BsModalRef, private toastr: ToastrService,
-    private formatDateService: FormatDateService, private listsService: ListsService) {}
+  constructor(private store: Store, public bsModalRef: BsModalRef, private toastr: ToastrService, private formatDateService: FormatDateService) {}
 
   ngOnInit(): void {
     this.listObject = {id: this.listId, name: this.listName};
@@ -44,7 +41,7 @@ export class AddCardComponent implements OnInit {
 
   createCard() {
     if (this.createCardForm.valid) {
-      const cardData = {
+      const card = {
         name: this.createCardForm.value['name'],
         description: this.createCardForm.value['description'],
         dueDate: this.formatDateService.formatDate(this.createCardForm.value['dueDate']),
@@ -52,22 +49,11 @@ export class AddCardComponent implements OnInit {
         listId: this.createCardForm.value['listInfo'].id, 
         boardId: this.boardId
       };
-      this.cardsService.createCard(cardData).pipe(
-        switchMap(() => this.boardsService.getBoard(this.boardId!)),
-        catchError(error => {
-          this.toastr.error("Failed to create card: " + error.message);
-          return of(null);
-        })
-      ).subscribe(response => {
-        if (response) {
-          this.boardsService.setBoard(response);
-          this.toastr.success("Card has been created");
-        }
-      });
+      this.store.dispatch(createCard({card}));
       this.bsModalRef.hide();
     } else {
       this.toastr.error('Please fill all fields');
-    }
+    } 
   }
 
   changeList(list: any){

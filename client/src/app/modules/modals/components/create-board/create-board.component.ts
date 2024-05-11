@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { finalize, switchMap } from 'rxjs';
-import { BoardsService } from 'src/app/modules/boards/services/boards.service';
+import { Subject, takeUntil } from 'rxjs';
+import { createBoard } from 'src/app/modules/core/store/actions/boards.action';
+import { selectBoards } from 'src/app/modules/core/store/selectors/boards.selector';
 
 @Component({
   selector: 'app-create-board',
@@ -12,11 +14,24 @@ import { BoardsService } from 'src/app/modules/boards/services/boards.service';
 })
 export class CreateBoardComponent implements OnInit {
   createBoardForm: FormGroup = new FormGroup({});
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private boardsService: BoardsService, private toastr: ToastrService, public bsModalRef: BsModalRef){}
+  constructor(private fb: FormBuilder, private store: Store, private toastr: ToastrService, public bsModalRef: BsModalRef){}
 
   ngOnInit(): void {
     this.initializeForm();
+    this.store.select(selectBoards)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(success => {
+        if (success) {
+          this.bsModalRef.hide();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initializeForm(){
@@ -26,14 +41,6 @@ export class CreateBoardComponent implements OnInit {
   }
 
   createBoard(){
-    this.boardsService.createBoard(this.createBoardForm.value['name']).pipe(
-      switchMap(() => this.boardsService.getBoards()),
-      finalize(() => this.bsModalRef.hide())
-    ).subscribe({
-      next: response => {
-        this.boardsService.setBoardNames(response);
-        this.toastr.success(`The board ${this.createBoardForm.value['name']} has been created`);
-      }
-    });
+    this.store.dispatch(createBoard({board: {name: this.createBoardForm.value['name']}}));
   }
 }

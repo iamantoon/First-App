@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(boardsService.board$ | async) as currentBoard">
+<div class="container" *ngIf="(board$ | async) as currentBoard">
     <button class="button-back" (click)="goBack()">
         <i class="fa fa-arrow-left" style="font-size: 13px; font-weight: normal;"></i>
         Back

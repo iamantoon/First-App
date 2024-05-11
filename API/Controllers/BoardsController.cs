@@ -35,7 +35,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CreateBoardDto>> CreateList(CreateBoardDto createBoardDto)
+        public async Task<ActionResult<object>> CreateBoard(CreateBoardDto createBoardDto)
         {
             if (await _unitOfWork.BoardRepository.BoardExists(createBoardDto.Name))
             {
@@ -54,7 +54,7 @@ namespace API.Controllers
 
             if (newBoard.Id > 0)
             {
-                return CreatedAtAction(nameof(GetBoard), new { id = newBoard.Id }, createBoardDto);
+                return CreatedAtAction(nameof(GetBoard), new { id = newBoard.Id }, new { id = newBoard.Id, name = newBoard.Name });
             }
             else
             {

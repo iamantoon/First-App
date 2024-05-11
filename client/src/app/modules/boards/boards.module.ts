@@ -8,6 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { BoardsComponent } from './components/boards/boards.component';
 import { BoardItemComponent } from './components/board-item/board-item.component';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { boardsReducer } from '../core/store/reducers/boards.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { BoardsEffects } from '../core/store/effects/boards.effects';
+import { boardReducer } from '../core/store/reducers/board.reducer';
+import { BoardEffects } from '../core/store/effects/board.effects';
 
 @NgModule({
   declarations: [
@@ -21,7 +27,10 @@ import { RouterModule } from '@angular/router';
     ListsModule,
     HistoryModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forFeature("boardNames", boardsReducer),
+    StoreModule.forFeature("board", boardReducer),
+    EffectsModule.forFeature([BoardsEffects, BoardEffects])
   ],
   exports: [
     BoardComponent,

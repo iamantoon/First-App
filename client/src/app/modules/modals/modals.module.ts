@@ -9,9 +9,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HistoryModule } from '../history/history.module';
 import { ListsModule } from '../lists/lists.module';
-
 import { CreateBoardComponent } from './components/create-board/create-board.component';
 import { EditBoardComponent } from './components/edit-board/edit-board.component';
+import { EffectsModule } from '@ngrx/effects';
+import { BoardsEffects } from '../core/store/effects/boards.effects';
+import { StoreModule } from '@ngrx/store';
+import { boardsReducer } from '../core/store/reducers/boards.reducer';
+import { boardReducer } from '../core/store/reducers/board.reducer';
+import { BoardEffects } from '../core/store/effects/board.effects';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import { EditBoardComponent } from './components/edit-board/edit-board.component
     ToastrModule,
     ModalModule,
     HistoryModule,
-    ListsModule
+    ListsModule,
+    StoreModule.forFeature("board", boardReducer),
+    StoreModule.forFeature("boardNames", boardsReducer),
+    EffectsModule.forFeature([BoardsEffects, BoardEffects])
   ],
   exports: [
     AddCardComponent,

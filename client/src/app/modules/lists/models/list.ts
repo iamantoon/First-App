@@ -21,6 +21,10 @@ export interface CreateList {
     boardId: number;
 }
 
+export interface CreatedList extends CreateList {
+    id: number;
+}
+
 export interface EditList {
     listId: number;
     name: string;

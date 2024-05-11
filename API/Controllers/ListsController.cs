@@ -42,7 +42,7 @@ namespace API.Controllers
             if (_unitOfWork.HasChanges())
             {
                 await _unitOfWork.Complete();
-                return CreatedAtAction(nameof(GetList), new { id = newList.Id }, createListDto);
+                return CreatedAtAction(nameof(GetList), new { id = newList.Id }, new { id = newList.Id, name = newList.Name, boardId = newList.AppBoardId });
             }
             else
             {

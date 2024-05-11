@@ -1,31 +1,41 @@
-import { Component, Input } from '@angular/core';
-import { BoardsService } from '../../services/boards.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { EditBoardComponent } from 'src/app/modules/modals/components/edit-board/edit-board.component';
-import { ToastrService } from 'ngx-toastr';
-import { switchMap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { deleteBoard } from 'src/app/modules/core/store/actions/boards.action';
+import { selectBoards, selectSortedBoards } from 'src/app/modules/core/store/selectors/boards.selector';
 
 @Component({
   selector: 'app-board-item',
   templateUrl: './board-item.component.html',
   styleUrls: ['./board-item.component.css']
 })
-export class BoardItemComponent {
+export class BoardItemComponent implements OnInit {
   @Input() name = '';
   @Input() id?: number;
   bsModalRef: BsModalRef<EditBoardComponent> = new BsModalRef<EditBoardComponent>();
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private boardsService: BoardsService, private modalService: BsModalService, private toastr: ToastrService){}
+  constructor(private store: Store, private modalService: BsModalService){}
+
+  ngOnInit(): void {
+    this.store.select(selectSortedBoards)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(success => {
+        if (success) {
+          this.bsModalRef.hide();
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   deleteBoard(id: number) {
-    this.boardsService.deleteBoard(id).pipe(
-      switchMap(() => this.boardsService.getBoards())
-    ).subscribe({
-      next: response => {
-        this.boardsService.setBoardNames(response);
-        this.toastr.success(`Board ${this.name} has been deleted`);
-      }
-    });
+    this.store.dispatch(deleteBoard({id}));
   }
   
   editBoardModal(id: number, name: string){

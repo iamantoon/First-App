@@ -9,6 +9,8 @@ import { FormatDateService } from '../../services/format-date.service';
 import { catchError, of, switchMap } from 'rxjs';
 import { BoardsService } from 'src/app/modules/boards/services/boards.service';
 import { ListsService } from 'src/app/modules/lists/services/lists.service';
+import { Store } from '@ngrx/store';
+import { editCard } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-edit-card',
@@ -30,7 +32,7 @@ export class EditCardComponent implements OnInit {
   minDate: Date = new Date();
   listObject: List = {};
   
-  constructor(private fb: FormBuilder, private cardsService: CardsService, private boardsService: BoardsService, public bsModalRef: BsModalRef, 
+  constructor(private fb: FormBuilder, private store: Store, public bsModalRef: BsModalRef, 
     private toastr: ToastrService, private formatDateService: FormatDateService, public listsService: ListsService){}
 
   ngOnInit(): void {
@@ -58,18 +60,7 @@ export class EditCardComponent implements OnInit {
         listId: this.editCardForm.value['listInfo'].id,
         boardId: this.boardId
       };
-      this.cardsService.editCard(this.cardId, cardData).pipe(
-        switchMap(() => this.boardsService.getBoard(this.boardId!)),
-        catchError(error => {
-          this.toastr.error("Failed to create card: " + error.message);
-          return of(null);
-        })
-      ).subscribe(response => {
-        if (response) {
-          this.boardsService.setBoard(response);
-          this.toastr.success(`Card ${this.cardName} has been updated`);
-        }
-      });
+      this.store.dispatch(editCard({payload: {id: this.cardId, ...cardData}}));
       this.bsModalRef.hide();
     } else {
       this.toastr.error('Please fill all fields');

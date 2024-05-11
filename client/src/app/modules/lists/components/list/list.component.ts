@@ -2,11 +2,9 @@ import { Component, Input } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Card } from 'src/app/modules/cards/models/card';
 import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add-card.component';
-import { ListsService } from '../../services/lists.service';
-import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from '../../models/list';
-import { switchMap } from 'rxjs';
-import { BoardsService } from 'src/app/modules/boards/services/boards.service';
+import { Store } from '@ngrx/store';
+import { deleteList } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-list',
@@ -26,17 +24,10 @@ export class ListComponent {
   @Input() ordinalNumber?: number;
   rightContextMenu = true;
 
-  constructor(private listsService: ListsService, private boardsService: BoardsService, private modalService: BsModalService, private toastr: ToastrService){}
+  constructor(private store: Store, private modalService: BsModalService){}
 
   deleteList(id: number) {
-    this.listsService.deleteList(id).pipe(
-      switchMap(() => this.boardsService.getBoard(this.boardId!))
-    ).subscribe({
-      next: response => {
-        this.boardsService.boardSubject.next(response);
-        this.toastr.success('List has been deleted');
-      }
-    });
+    this.store.dispatch(deleteList({id}));
   } 
   
   openCreateCardModal(){

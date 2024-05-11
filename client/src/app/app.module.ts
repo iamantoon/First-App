@@ -15,6 +15,9 @@ import { ModalsModule } from './modules/modals/modals.module';
 import { BoardsModule } from './modules/boards/boards.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './modules/home/home.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { HomeModule } from './modules/home/home.module';
     HistoryModule,
     BoardsModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
