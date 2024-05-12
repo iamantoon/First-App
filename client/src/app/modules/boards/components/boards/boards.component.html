@@ -1,0 +1,10 @@
+<div class="boards-container" *ngIf="(boards$ | async) as boards">
+    <app-board-item
+        *ngFor="let board of boards.boards"
+        [name]="board.name"
+        [id]="board.id"
+    ></app-board-item>
+    <div class="board-item" (click)="createBoardModal()">
+        <h5 class="board-text">Create board</h5>
+    </div>
+</div>

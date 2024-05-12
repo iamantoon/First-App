@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HistoryService } from '../../services/history.service';
 import { Activity } from '../../models/activity';
 
@@ -9,6 +9,7 @@ import { Activity } from '../../models/activity';
 })
 export class HistoryComponent implements OnInit {
   @Output() hideHistory = new EventEmitter();
+  @Input() boardId?: number;
   pageSize: number = 20;
   totalCount?: number;
   loggedActivity: Activity[] = [];
@@ -16,11 +17,11 @@ export class HistoryComponent implements OnInit {
   constructor(private historyService: HistoryService) {}
 
   ngOnInit(): void {
-    this.getLoggedActivity(this.pageSize);
+    if (this.boardId) this.getLoggedActivity(this.boardId, this.pageSize);
   }
 
-  getLoggedActivity(pageSize: number){
-    this.historyService.getLoggedActivity(pageSize).subscribe({
+  getLoggedActivity(boardId: number, pageSize: number){
+    this.historyService.getLoggedActivity(boardId, pageSize).subscribe({
       next: (value) => {
         this.loggedActivity = value.activities;
         this.totalCount = value.totalCount;
@@ -34,7 +35,7 @@ export class HistoryComponent implements OnInit {
     const currentIndex = pageSizeIncrements.indexOf(this.pageSize);
     if (currentIndex !== -1 && currentIndex < pageSizeIncrements.length - 1) {
       const nextPageSize = pageSizeIncrements[currentIndex + 1];
-      this.getLoggedActivity(nextPageSize);
+      if (this.boardId) this.getLoggedActivity(this.boardId, nextPageSize);
       this.pageSize = nextPageSize;
     }
   }

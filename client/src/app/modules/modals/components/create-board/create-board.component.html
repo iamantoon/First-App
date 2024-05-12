@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="container">
+        <h5 class="body-text">Enter name for new board</h5>
+        <form [formGroup]="createBoardForm" class="section-edit">
+            <input formControlName="name" class="input" placeholder="Enter name...">
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="footer">
+        <button 
+            class="button save" 
+            (click)="createBoard()" 
+        >Create</button>
+        <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
+    </div>
+</div>

@@ -1,16 +1,17 @@
-<div class="container" *ngIf="(this.listsService.lists$ | async) as lists">
+<div class="container">
     <app-list
-        *ngFor="let list of lists?.lists; let i = index"
+        *ngFor="let list of lists; let i = index"
         [listName]="list.name"
         [listId]="list.id"
+        [boardId]="boardId"
         [count]="list.cards.length"
         [cards]="list.cards"
-        [lists]="lists.listNames"
+        [lists]="listsNames"
         [priorities]="['Low', 'Medium', 'High']"
         [ordinalNumber]="i + 1"
     ></app-list>
     <div>
-        <app-add-list (changeEditMode)="changeMode()" *ngIf="createListMode"></app-add-list>
+        <app-add-list (changeEditMode)="changeMode()" *ngIf="createListMode" [boardId]="boardId"></app-add-list>
         <header class="header pointer" *ngIf="!createListMode">
             <h5 class="list-name">Add another list</h5>
             <div class="header__button">

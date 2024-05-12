@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using API.DTOs;
+using API.DTOs.Card;
 
 namespace API.Helpers
 {

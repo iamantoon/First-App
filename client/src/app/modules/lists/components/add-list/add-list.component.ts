@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { ListsService } from '../../services/lists.service';
-import { ToastrService } from 'ngx-toastr';
-import { finalize, switchMap } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { createList } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-add-list',
@@ -10,20 +9,14 @@ import { finalize, switchMap } from 'rxjs';
 })
 export class AddListComponent {
   @Output() changeEditMode = new EventEmitter();
+  @Input() boardId?: number;
   titleInput = '';
 
-  constructor(private listsService: ListsService, private toastr: ToastrService){}
+  constructor(private store: Store){}
 
   createNewList() {
-    this.listsService.createList(this.titleInput).pipe(
-      switchMap(() => this.listsService.getLists()),
-      finalize(() => this.changeMode())
-    ).subscribe({
-      next: response => {
-        this.listsService.setLists(response);
-        this.toastr.success(`The list ${this.titleInput} has been created`);
-      }
-    });
+    this.boardId && this.store.dispatch(createList({list: {name: this.titleInput, boardId: this.boardId}}));
+    this.changeMode();
   }
 
   changeMode(){

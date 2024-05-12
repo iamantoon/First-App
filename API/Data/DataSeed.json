@@ -1,58 +1,42 @@
 [
     {
-        "Name": "Completed",
-        "Cards": [
+        "Name": "Spring",
+        "Lists": [
             {
-                "Name": "Achieve C1 level in English",
-                "Description": "English is widely used as the language of instruction in universities and educational institutions around the world.",
-                "DueDate": "2024-04-02",
-                "Priority": "High",
-                "AppListId": 1
+                "Name": "Completed",
+                "Cards": [],
+                "AppBoardId": 1
             },
             {
-                "Name": "Attain mathematical proficiency",
-                "Description": "Mathematics teaches analytical thinking and problem-solving skills.",
-                "DueDate": "2023-05-25",
-                "Priority": "Low",
-                "AppListId": 1
+                "Name": "In progress",
+                "Cards": [],
+                "AppBoardId": 1
             },
             {
-                "Name": "Learn JavaScript",
-                "Description": "JavaScript is a versatile language that can be used for both front-end and back-end development.",
-                "DueDate": "2024-02-01",
-                "Priority": "Medium",
-                "AppListId": 1
+                "Name": "Future chores",
+                "Cards": [],
+                "AppBoardId": 1
             }
         ]
     },
     {
-        "Name": "In progress",
-        "Cards": [
+        "Name": "Summer",
+        "Lists": [
             {
-                "Name": "Read 'The Great Gatsby' by F. Scott Fitzgerald",
-                "Description": "Set during the Roaring Twenties, Fitzgerald's novel captures the glamour, decadence, and disillusionment of the Jazz Age.",
-                "DueDate": "2024-05-30",
-                "Priority": "Low",
-                "AppListId": 2
+                "Name": "Done",
+                "Cards": [],
+                "AppBoardId": 2
             },
             {
-                "Name": "Achieve personal best in weightlifting",
-                "Description": "Weightlifting promotes overall physical fitness by improving strength, muscle tone, and endurance.",
-                "DueDate": "2024-06-20",
-                "Priority": "High",
-                "AppListId": 2
+                "Name": "Under process",
+                "Cards": [],
+                "AppBoardId": 2
             },
             {
-                "Name": "Achieve B2 level in German",
-                "Description": "German language and culture have made significant contributions to the fields of literature, philosophy, music, art, and science.",
-                "DueDate": "2024-07-01",
-                "Priority": "Medium",
-                "AppListId": 2
+                "Name": "Coming soon",
+                "Cards": [],
+                "AppBoardId": 2
             }
         ]
-    },
-    {
-        "Name": "Future chores",
-        "Cards": []
     }
 ]

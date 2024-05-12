@@ -6,7 +6,7 @@ namespace API.Data
 {
     public class Seed
     {
-        public static async Task SeedUsers(DataContext context)
+        public static async Task SeedBoards(DataContext context)
         {
             if (await context.Lists.AnyAsync()) return;
 
@@ -14,11 +14,11 @@ namespace API.Data
 
             var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
 
-            var lists = JsonSerializer.Deserialize<List<AppList>>(data, options);
+            var boards = JsonSerializer.Deserialize<List<AppBoard>>(data, options);
 
-            foreach(var list in lists)
+            foreach(var board in boards)
             {
-                context.Lists.Add(list);
+                context.Boards.Add(board);
             }
 
             await context.SaveChangesAsync();

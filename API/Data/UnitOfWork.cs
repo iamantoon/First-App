@@ -13,10 +13,9 @@ namespace API.Data
             _mapper = mapper;
         }
 
+        public IBoardRepository BoardRepository => new BoardRepository(_context, _mapper);
         public ICardRepository CardRepository => new CardRepository(_context);
-
         public IListRepository ListRepository => new ListRepository(_context, _mapper);
-
         public ILogActivityRepository LogActivityRepository => new LogActivityRepository(_context, _mapper);
 
         public async Task<bool> Complete()

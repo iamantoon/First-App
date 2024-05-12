@@ -1,0 +1,93 @@
+.container {
+    position: relative;
+    margin: 0 auto;
+    padding: 10px 25px;
+}
+
+.board-name {
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.board-header {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.title {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.select {
+    display: block;
+    padding: 6px 15px;
+    margin-top: 3px;
+    border-radius: 5px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    color: var(--black);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.dropdown-toggle, .dropdown-item {
+    width: 100%;
+    cursor: pointer;
+}
+
+.button-toggle {
+    background-color: rbga(255, 255, 255, 0);
+    border: none;
+    width: 15px;
+    height: 15px;
+}
+
+.delete {
+    color: var(--red);
+}
+
+.move {
+    width: 100%;
+}
+
+.button {
+    padding: 8px 19px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.button-back {
+    padding: 6px 13px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}

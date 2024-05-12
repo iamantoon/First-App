@@ -31,6 +31,7 @@
             [priority]="card.priority"
             [list]="listName"
             [listId]="listId"
+            [boardId]="boardId"
             [lists]="lists"
             [rightContextMenu]="isDivisibleByFour(ordinalNumber!)"
         ></app-card>
@@ -38,5 +39,5 @@
 </div>
 
 <div class="container" *ngIf="editListMode">
-    <app-edit-list [name]="listName" [id]="listId" (changeEditMode)="changeEditMode()"></app-edit-list>
+    <app-edit-list [name]="listName" [id]="listId" [boardId]="boardId" (changeEditMode)="changeEditMode()"></app-edit-list>
 </div>

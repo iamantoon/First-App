@@ -1,0 +1,29 @@
+<div class="container" *ngIf="(board$ | async) as currentBoard">
+    <button class="button-back" (click)="goBack()">
+        <i class="fa fa-arrow-left" style="font-size: 13px; font-weight: normal;"></i>
+        Back
+    </button>
+    <nav class="nav">
+        <div class="controls">
+            <h6 class="board-name">{{currentBoard.name}}</h6>
+            <div class="dropdown" dropdown>
+                <button dropdownToggle class="button-toggle">
+                    <i class="fa fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" *dropdownMenu>
+                    <p class="dropdown-item" (click)="editBoardModal()">
+                        <i class="fa fa-edit"></i>
+                        Edit board
+                    </p>
+                    <p class="dropdown-item delete" (click)="deleteBoard()">
+                        <i class="fa fa-trash"></i>
+                        Delete board
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class="history" (click)="toggleHistory()" class="button">History</button>
+    </nav>
+    <app-history *ngIf="isHistoryVisible" (hideHistory)="toggleHistory()" [boardId]="currentBoard.id"></app-history>
+    <app-lists [boardId]="currentBoard.id" [lists]="currentBoard.lists" [listsNames]="currentBoard.listNames"></app-lists>
+</div>
