@@ -6,8 +6,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CardsService } from 'src/app/modules/cards/services/cards.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormatDateService } from '../../services/format-date.service';
-import { ListsService } from 'src/app/modules/lists/services/lists.service';
 import { catchError, of, switchMap } from 'rxjs';
+import { BoardsService } from 'src/app/modules/boards/services/boards.service';
+import { ListsService } from 'src/app/modules/lists/services/lists.service';
+import { Store } from '@ngrx/store';
+import { editCard } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-edit-card',
@@ -20,17 +23,17 @@ export class EditCardComponent implements OnInit {
   description?: string; // card description
   dueDate?: string; // card date
   priority?: string; // card priority
-
   listName?: string; // list name
   listId?: number; // list id
+  boardId?: number;
   lists: ListsWithIds[] = []; // all current lists
   priorities: string[] = []; // all priorities
   editCardForm: FormGroup = new FormGroup({});
   minDate: Date = new Date();
   listObject: List = {};
   
-  constructor(private fb: FormBuilder, private cardsService: CardsService, public bsModalRef: BsModalRef, 
-    private toastr: ToastrService, private formatDateService: FormatDateService, private listsService: ListsService){}
+  constructor(private fb: FormBuilder, private store: Store, public bsModalRef: BsModalRef, 
+    private toastr: ToastrService, private formatDateService: FormatDateService, public listsService: ListsService){}
 
   ngOnInit(): void {
     this.listObject = {name: this.listName, id: this.listId};
@@ -50,25 +53,17 @@ export class EditCardComponent implements OnInit {
   saveChanges() {
     if (this.editCardForm.valid && this.cardId) {
       const cardData = {
-        ...this.editCardForm.value, 
+        name: this.editCardForm.value['name'],
+        description: this.editCardForm.value['description'],
+        dueDate: this.formatDateService.formatDate(this.editCardForm.value['dueDate']),
+        priority: this.editCardForm.value['priority'],
         listId: this.editCardForm.value['listInfo'].id,
-        dueDate: this.formatDateService.formatDate(this.editCardForm.value['dueDate'])
+        boardId: this.boardId
       };
-      this.cardsService.editCard(this.cardId, cardData).pipe(
-        switchMap(() => this.listsService.getLists()),
-        catchError(error => {
-          this.toastr.error("Failed to create card: " + error.message);
-          return of(null);
-        })
-      ).subscribe(response => {
-        if (response) {
-          this.listsService.setLists(response);
-          this.toastr.success(`Card ${this.cardName} has been updated`);
-        }
-      });
+      this.store.dispatch(editCard({payload: {id: this.cardId, ...cardData}}));
       this.bsModalRef.hide();
     } else {
-      this.toastr.error('Please fill all required fields');
+      this.toastr.error('Please fill all fields');
     }
   }
 

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
-import { ListsService } from '../../services/lists.service';
-import { ToastrService } from 'ngx-toastr';
-import { finalize, switchMap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { editList } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-edit-list',
@@ -12,27 +11,21 @@ export class EditListComponent implements OnInit {
   @Output() changeEditMode = new EventEmitter();
   @Input() name?: string;
   @Input() id?: number;
+  @Input() boardId?: number;
   initialName? = '';
 
-  constructor(private listsService: ListsService, private toastr: ToastrService){}
+  constructor(private store: Store){}
 
   ngOnInit(): void {
     this.initialName = this.name;
   }
-    
+  
   editList() {
     if (this.name && this.id){
-      this.listsService.editList(this.id, this.name).pipe(
-        switchMap(() => this.listsService.getLists()),
-        finalize(() => this.changeMode())
-      ).subscribe({
-        next: response => {
-          this.listsService.setLists(response);
-          this.toastr.success(`The list ${this.name} has been updated`);
-        }
-      });
+      this.store.dispatch(editList({list: {listId: this.id, name: this.name}}));
+      this.changeMode();
     }
-  } 
+  }
 
   changeMode(){
     this.changeEditMode.emit();

@@ -2,8 +2,9 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-        ICardRepository CardRepository { get; }
+        IBoardRepository BoardRepository { get; }
         IListRepository ListRepository { get; }
+        ICardRepository CardRepository { get; }
         ILogActivityRepository LogActivityRepository { get; }
         Task<bool> Complete();
         bool HasChanges();

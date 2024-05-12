@@ -1,0 +1,49 @@
+.board-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+    border: 2px solid var(--border-grey);
+    border-radius: 10px;
+    transition: border 0.4s;
+    cursor: pointer;
+}
+
+.board-item-name {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.board-item-text {
+    font-size: 1.12rem;
+    font-weight: 400;
+}
+
+.board-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    width: 98%;
+}
+
+.button-toggle {
+    background-color: rbga(255, 255, 255, 0);
+    border: none;
+    width: 20px;
+    height: 20px;
+}
+
+.board-item:hover {
+    border: 2px solid var(--font-grey);
+}
+
+.dropdown-toggle, .dropdown-item {
+    width: 100%;
+    cursor: pointer;
+}
+
+.delete {
+    color: var(--red);
+}

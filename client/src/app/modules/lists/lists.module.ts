@@ -7,6 +7,10 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddListComponent } from './components/add-list/add-list.component';
 import { EditListComponent } from './components/edit-list/edit-list.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { boardReducer } from '../core/store/reducers/board.reducer';
+import { BoardEffects } from '../core/store/effects/board.effects';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { EditListComponent } from './components/edit-list/edit-list.component';
     CardsModule,
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forFeature("board", boardReducer),
+    EffectsModule.forFeature([BoardEffects])
   ],
   exports: [
     ListsComponent

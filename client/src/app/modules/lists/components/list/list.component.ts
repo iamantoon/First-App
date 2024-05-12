@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Card } from 'src/app/modules/cards/models/card';
 import { AddCardComponent } from 'src/app/modules/modals/components/add-card/add-card.component';
-import { ListsService } from '../../services/lists.service';
-import { ToastrService } from 'ngx-toastr';
 import { ListsWithIds } from '../../models/list';
-import { switchMap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { deleteList } from 'src/app/modules/core/store/actions/board.action';
 
 @Component({
   selector: 'app-list',
@@ -15,6 +14,7 @@ import { switchMap } from 'rxjs';
 export class ListComponent {
   @Input() listName?: string;
   @Input() listId?: number;
+  @Input() boardId?: number;
   @Input() count?: number;
   @Input() cards: Card[] = [];
   @Input() lists: ListsWithIds[] = [];
@@ -24,17 +24,10 @@ export class ListComponent {
   @Input() ordinalNumber?: number;
   rightContextMenu = true;
 
-  constructor(private listsService: ListsService, private modalService: BsModalService, private toastr: ToastrService){}
+  constructor(private store: Store, private modalService: BsModalService){}
 
   deleteList(id: number) {
-    this.listsService.deleteList(id).pipe(
-      switchMap(() => this.listsService.getLists())
-    ).subscribe({
-      next: response => {
-        this.listsService.setLists(response);
-        this.toastr.success(`List has been deleted`);
-      }
-    });
+    this.store.dispatch(deleteList({id}));
   } 
   
   openCreateCardModal(){
@@ -43,6 +36,7 @@ export class ListComponent {
         lists: this.lists,
         priorities: this.priorities,
         listId: this.listId,
+        boardId: this.boardId,
         listName: this.listName
       }
     }

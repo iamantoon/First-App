@@ -5,5 +5,8 @@ namespace API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Card> Cards { get; set; } = new();
+
+        public int AppBoardId { get; set; }
+        public AppBoard AppBoard { get; set; }
     }
 }

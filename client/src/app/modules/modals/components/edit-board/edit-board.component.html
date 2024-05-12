@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <div class="container">
+        <button type="button" class="btn-close close pull-right" (click)="bsModalRef.hide()">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="container">
+        <h5 class="body-text">Enter new name for board</h5>
+        <form [formGroup]="editBoardForm" class="section-edit">
+            <input formControlName="name" class="input">
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="footer">
+        <button 
+            class="button save" 
+            (click)="editBoard()" 
+        >Save</button>
+        <button class="button cancel" (click)="bsModalRef.hide()">Cancel</button>
+    </div>
+</div>

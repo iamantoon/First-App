@@ -1,0 +1,27 @@
+.boards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin: 10px auto;
+}
+
+.board-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    border: 2px solid var(--border-grey);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.board-item:hover {
+    border: 2px solid var(--font-grey);
+}
+
+.board-text {
+    text-align: center;
+    font-size: 1.12rem;
+    font-weight: 400;
+}

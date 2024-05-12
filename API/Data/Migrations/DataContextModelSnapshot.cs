@@ -33,6 +33,9 @@ namespace API.Data.Migrations
                     b.Property<string>("ActivityName")
                         .HasColumnType("text");
 
+                    b.Property<int>("BoardId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CardId")
                         .HasColumnType("integer");
 
@@ -40,7 +43,7 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ListName")
                         .HasColumnType("text");
@@ -56,7 +59,7 @@ namespace API.Data.Migrations
                     b.ToTable("LoggedActivities");
                 });
 
-            modelBuilder.Entity("API.Entities.AppList", b =>
+            modelBuilder.Entity("API.Entities.AppBoard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,6 +72,27 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("Boards");
+                });
+
+            modelBuilder.Entity("API.Entities.AppList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppBoardId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppBoardId");
+
                     b.ToTable("Lists");
                 });
 
@@ -79,6 +103,9 @@ namespace API.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppBoardId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("AppListId")
                         .HasColumnType("integer");
@@ -97,20 +124,48 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppBoardId");
+
                     b.HasIndex("AppListId");
 
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("API.Entities.AppList", b =>
+                {
+                    b.HasOne("API.Entities.AppBoard", "AppBoard")
+                        .WithMany("Lists")
+                        .HasForeignKey("AppBoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppBoard");
+                });
+
             modelBuilder.Entity("API.Entities.Card", b =>
                 {
+                    b.HasOne("API.Entities.AppBoard", "AppBoard")
+                        .WithMany("Cards")
+                        .HasForeignKey("AppBoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Entities.AppList", "AppList")
                         .WithMany("Cards")
                         .HasForeignKey("AppListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AppBoard");
+
                     b.Navigation("AppList");
+                });
+
+            modelBuilder.Entity("API.Entities.AppBoard", b =>
+                {
+                    b.Navigation("Cards");
+
+                    b.Navigation("Lists");
                 });
 
             modelBuilder.Entity("API.Entities.AppList", b =>

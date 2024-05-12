@@ -1,45 +1,57 @@
+# version: '3.4'
+
+# services:
+#   frontend:
+#     image: docker.io/library/app-web
+#     build: 
+#       context: .
+#       dockerfile: ./client/Dockerfile
+#     ports:
+#       - "5200:80"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     container_name: backend
+#     build: 
+#       context: .
+#       dockerfile: ./API/Dockerfile
+#     ports:
+#       - "5010:80" 
+#     environment:
+#       - ConnectionStrings__DefaultConnection=Host=postgres;Database=database;Username=postgres;Password=password
+#       - Cors__AllowedOrigins__0=http://localhost:5200
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+#     restart: on-failure 
+
+#   postgres:
+#     container_name: postgres
+#     image: postgres:14.3-alpine 
+#     ports:
+#       - "5432:5432"
+#     environment:
+#       - POSTGRES_PASSWORD=password
+#     volumes:
+#       - app_data:/var/lib/postgresql/data
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U postgres"]
+#       interval: 10s
+#       timeout: 10s
+#       retries: 10
+
+# volumes:
+#   app_data:
+
 version: '3.4'
 
 services:
-  frontend:
-    image: docker.io/library/app-web
-    build: 
-      context: .
-      dockerfile: ./client/Dockerfile
-    ports:
-      - "5200:80"
-    depends_on:
-      - backend
-
-  backend:
-    container_name: backend
-    build: 
-      context: .
-      dockerfile: ./API/Dockerfile
-    ports:
-      - "5010:80" 
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres;Database=database;Username=postgres;Password=password
-      - Cors__AllowedOrigins__0=http://localhost:5200
-    depends_on:
-      postgres:
-        condition: service_healthy
-    restart: on-failure 
-
-  postgres:
-    container_name: postgres
-    image: postgres:14.3-alpine 
+  db_auth:
+    container_name: db_auth
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - app_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-
-volumes:
-  app_data:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+    image: postgres:14.3-alpine

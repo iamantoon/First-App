@@ -1,8 +1,7 @@
-using API.DTOs;
-using API.Entities;
-using API.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
+using API.Entities;
 
 namespace API.Data
 {
@@ -18,18 +17,12 @@ namespace API.Data
         {
             return await _context.Cards.AddAsync(card);
         }
-        public Task<CardDto> UpdateCardAsync(UpdateCardDto card)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool DeleteCard(Card cardToDelete)
         {
-           var deletedCard = _context.Cards.Remove(cardToDelete);
+            var deletedCard = _context.Cards.Remove(cardToDelete);
 
-            if (deletedCard == null) return false;
-
-            return true;
+            return deletedCard != null;
         }
 
         public async Task<Card> FindCardByIdAsync(int id)

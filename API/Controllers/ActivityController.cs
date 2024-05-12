@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using API.DTOs.Activity;
 using API.Interfaces;
-using API.DTOs;
 
 namespace API.Controllers
 {
@@ -13,9 +13,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ActivityResponseDto>> GetActivities(int pageSize = 20)
+        public async Task<ActionResult<ActivityResponseDto>> GetActivities(int boardId, int pageSize = 20)
         {
-            var activities = await _unitOfWork.LogActivityRepository.GetActivitiesAsync(pageSize);
+            var activities = await _unitOfWork.LogActivityRepository.GetActivitiesByBoardIdAsync(boardId, pageSize);
 
             return Ok(activities);
         }

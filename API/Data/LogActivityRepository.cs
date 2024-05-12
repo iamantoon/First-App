@@ -1,10 +1,10 @@
-using API.DTOs;
-using API.Entities;
-using API.Interfaces;
-using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using API.DTOs.Activity;
+using API.Interfaces;
+using API.Entities;
+using AutoMapper;
 
 namespace API.Data
 {
@@ -18,15 +18,16 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<ActivityResponseDto> GetActivitiesAsync(int pageSize)
+        public async Task<ActivityResponseDto> GetActivitiesByBoardIdAsync(int boardId, int pageSize)
         {
             var activities = await _context.LoggedActivities
+                .Where(a => a.BoardId == boardId)
                 .Take(pageSize)
                 .OrderByDescending(a => a.Date)
                 .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            var totalCount = await _context.LoggedActivities.CountAsync();
+            var totalCount = await _context.LoggedActivities.Where(a => a.BoardId == boardId).CountAsync();
 
             var response = new ActivityResponseDto
             {
@@ -50,12 +51,13 @@ namespace API.Data
             return activities;
         }
 
-        public async Task<EntityEntry<Activity>> LogChangeDescriptionAsync(string cardName, int cardId, string previousDescription, string newDescription)
+        public async Task<EntityEntry<Activity>> LogChangeDescriptionAsync(string cardName, int cardId, string previousDescription, string newDescription, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "changed the description",
                 Previous = previousDescription,
                 Updated = newDescription,
@@ -65,12 +67,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogChangeDueDateAsync(string cardName, int cardId, DateOnly previousDate, DateOnly newDate)
+        public async Task<EntityEntry<Activity>> LogChangeDueDateAsync(string cardName, int cardId, DateOnly previousDate, DateOnly newDate, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "changed the date",
                 Previous = Convert.ToString(previousDate),
                 Updated = Convert.ToString(newDate),
@@ -80,12 +83,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogChangeNameAsync(int cardId, string cardName, string newName)
+        public async Task<EntityEntry<Activity>> LogChangeNameAsync(int cardId, string cardName, string newName, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "renamed",
                 Previous = cardName,
                 Updated = newName,
@@ -95,12 +99,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogChangePriorityAsync(string cardName, int cardId, string previousPriority, string newPriority)
+        public async Task<EntityEntry<Activity>> LogChangePriorityAsync(string cardName, int cardId, string previousPriority, string newPriority, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "changed the priority",
                 Previous = previousPriority,
                 Updated = newPriority,
@@ -110,12 +115,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogCreateCardAsync(string cardName, int cardId, string listName)
+        public async Task<EntityEntry<Activity>> LogCreateCardAsync(string cardName, int cardId, string listName, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "added",
                 Previous = "",
                 Updated = cardName,
@@ -126,12 +132,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogDeleteCardAsync(string cardName, int cardId, string listName)
+        public async Task<EntityEntry<Activity>> LogDeleteCardAsync(string cardName, int cardId, string listName, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "deleted",
                 Previous = cardName,
                 Updated = "",
@@ -142,12 +149,13 @@ namespace API.Data
             return await _context.LoggedActivities.AddAsync(activity);
         }
 
-        public async Task<EntityEntry<Activity>> LogMoveCardAsync(string cardName, int cardId, string previousList, string newList)
+        public async Task<EntityEntry<Activity>> LogMoveCardAsync(string cardName, int cardId, string previousList, string newList, int boardId)
         {
             var activity = new Activity
             {
                 CardName = cardName,
                 CardId = cardId,
+                BoardId = boardId,
                 ActivityName = "moved",
                 Previous = previousList,
                 Updated = newList,

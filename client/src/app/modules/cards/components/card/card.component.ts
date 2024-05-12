@@ -6,7 +6,9 @@ import { EditCardComponent } from 'src/app/modules/modals/components/edit-card/e
 import { OpenCardComponent } from 'src/app/modules/modals/components/open-card/open-card.component';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { switchMap } from 'rxjs';
-import { ListsService } from 'src/app/modules/lists/services/lists.service';
+import { BoardsService } from 'src/app/modules/boards/services/boards.service';
+import { deleteCard, editCard } from 'src/app/modules/core/store/actions/board.action';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-card',
@@ -21,34 +23,30 @@ export class CardComponent {
   @Input() priority?: string;
   @Input() list?: string; // list name
   @Input() listId?: number; // list id
+  @Input() boardId?: number;
   @Input() lists: ListsWithIds[] = [];
   @Input() rightContextMenu?: boolean;
   priorities = ['Low', 'Medium', 'High'];
   bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 
-  constructor(private cardsService: CardsService, private modalService: BsModalService, 
-    private toastr: ToastrService, private listsService: ListsService){}
+  constructor(private store: Store, private modalService: BsModalService, ){}
 
   moveTo(move: number) {
-    this.cardsService.editCard(this.id!, {listId: move}).pipe(
-      switchMap(() => this.listsService.getLists())
-    ).subscribe({
-      next: response => {
-        this.listsService.setLists(response);
-        this.toastr.success(`Card ${this.name} has been moved`);
+    this.store.dispatch(editCard({
+      payload: {
+        id: this.id!, 
+        listId: move, 
+        boardId: this.boardId,
+        name: this.name,
+        description: this.description,
+        priority: this.priority,
+        dueDate: this.dueDate
       }
-    });
+    }));
   }
 
   deleteCard(id: number) {
-    this.cardsService.deleteCard(id).pipe(
-      switchMap(() => this.listsService.getLists())
-    ).subscribe({
-      next: response => {
-        this.listsService.setLists(response);
-        this.toastr.success(`Card ${this.name} has been deleted`);
-      }
-    });
+    this.store.dispatch(deleteCard({id}));
   } 
   
   openEditModal(){
@@ -61,6 +59,7 @@ export class CardComponent {
         priority: this.priority,
         listName: this.list,
         listId: this.listId,
+        boardId: this.boardId,
         lists: this.lists,
         priorities: this.priorities
       }
@@ -78,6 +77,7 @@ export class CardComponent {
         priority: this.priority,
         list: this.list,
         listId: this.listId,
+        boardId: this.boardId,
         lists: this.lists,
         priorities: this.priorities
       },

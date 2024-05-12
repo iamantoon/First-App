@@ -6,4 +6,5 @@ export interface Card {
     priority: string;
     list: string;
     listId: number;
+    boardId: number;
 }
