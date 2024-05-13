@@ -1,0 +1,57 @@
+<div class="header">
+    <div class="header-container">
+        <button type="button" class="btn-close close pull-right">
+            <span class="visually-hidden close">&times;</span>
+        </button>
+    </div>
+</div>
+<div class="body">
+    <div class="modal__content">
+        <div class="modal__body">
+            <div class="container">
+                <div class="modal__header">
+                    <h4 class="name">{{name}}</h4>
+                    <button class="button">Edit card</button>
+                </div>
+                <table class="card-info">
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-list"></i>
+                            List
+                        </td>
+                        <td class="info__value">{{list}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-calendar-o"></i>
+                            Due Date
+                        </td>
+                        <td class="info__value">{{dueDate | date}}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="info__name">
+                            <i class="fa fa-tag"></i>
+                            Priority
+                        </td>
+                        <td class="info__value">{{priority}}</td>
+                    </tr>
+                </table>                
+                <div class="description">
+                    <h5 class="description__heading">Description</h5>
+                    <p class="description__text">{{description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal__activity">
+            <div class="container">
+                <h4 class="name">Activity</h4>
+                <ul class="activity__list">
+                    <section class="activity">
+                        <h5 class="info">• You added <span class="card-name">{{name}}</span> to <span class="important">{{list}}</span></h5>
+                        <i class="date">{{'2024-06-01' | date:'MMMM d, y \'at\' HH:mm' }}</i>
+                    </section>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

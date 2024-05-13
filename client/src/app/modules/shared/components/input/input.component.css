@@ -1,0 +1,24 @@
+.input {
+    display: block;
+    width: 200px;
+    border-radius: 5px;
+    padding: 4px 3px;
+}
+
+.input--primary {
+    background-color: var(--priority-grey);
+    border: 1px solid var(--border-grey);
+}
+
+.input--secondary {
+    background-color: var(--white);
+    border: 1px solid var(--border-grey);
+}
+
+.input--primary::placeholder {
+    color: var(--black);
+}
+
+.input--secondary::placeholder {
+    color: var(--font-grey);
+}

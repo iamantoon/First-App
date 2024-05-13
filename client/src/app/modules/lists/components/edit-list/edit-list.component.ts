@@ -9,7 +9,7 @@ import { editList } from 'src/app/modules/core/store/actions/board.action';
 })
 export class EditListComponent implements OnInit {
   @Output() changeEditMode = new EventEmitter();
-  @Input() name?: string;
+  @Input() name?: string = 'Initial value';
   @Input() id?: number;
   @Input() boardId?: number;
   initialName? = '';

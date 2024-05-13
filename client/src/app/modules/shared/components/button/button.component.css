@@ -1,0 +1,21 @@
+.button {
+    padding: 8px 19px;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.button--primary {
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+}
+
+.button--secondary {
+    color: var(--white);
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+}
+
+.button--disabled {
+    cursor: not-allowed;
+}

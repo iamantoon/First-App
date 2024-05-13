@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { EditCardComponent } from 'src/app/modules/modals/components/edit-card/edit-card.component';
-import { OpenCardComponent } from 'src/app/modules/modals/components/open-card/open-card.component';
+import { ModalOptions } from 'ngx-bootstrap/modal';
 import { ListsWithIds } from 'src/app/modules/lists/models/list';
 import { deleteCard, editCard } from 'src/app/modules/core/store/actions/board.action';
 import { Store } from '@ngrx/store';
@@ -12,20 +10,19 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-  @Input() id?: number; // card id
+  @Input() id?: number;
   @Input() name?: string;
   @Input() description?: string;
   @Input() dueDate?: string;
   @Input() priority?: string;
-  @Input() list?: string; // list name
-  @Input() listId?: number; // list id
+  @Input() list?: string; 
+  @Input() listId?: number;
   @Input() boardId?: number;
   @Input() lists: ListsWithIds[] = [];
   @Input() rightContextMenu?: boolean;
   priorities = ['Low', 'Medium', 'High'];
-  bsModalRef: BsModalRef<EditCardComponent | OpenCardComponent> = new BsModalRef<EditCardComponent | OpenCardComponent>();
 
-  constructor(private store: Store, private modalService: BsModalService, ){}
+  constructor(private store: Store){}
 
   moveTo(move: number) {
     this.store.dispatch(editCard({
@@ -60,7 +57,6 @@ export class CardComponent {
         priorities: this.priorities
       }
     }
-    this.bsModalRef = this.modalService.show(EditCardComponent, initialState);
   }
 
   openCardModal(){
@@ -79,6 +75,5 @@ export class CardComponent {
       },
       class: 'modal-lg'
     }
-    this.bsModalRef = this.modalService.show(OpenCardComponent, initialState);
   }
 }

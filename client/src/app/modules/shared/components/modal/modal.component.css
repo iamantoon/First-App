@@ -1,0 +1,155 @@
+.header {
+    background-color: var(--blue);
+    padding: 12px 0 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.header-container {
+    position: relative;
+    padding: 10px;
+}
+
+.close {
+    position: absolute;
+    right: 9px;
+    top: 5px;
+}
+
+.container {
+    padding: 5px;
+}
+
+.button {
+    padding: 5px 12px;
+    border: 1px solid var(--border-grey);
+    background-color: var(--white);
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.button-close {
+    font-size: 1.2rem;
+    font-weight: 300;
+    float: right; 
+    margin-right: 8px;
+}
+
+.body {
+    border: 1px solid var(--border-grey);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top: none;
+}
+
+.modal__content {
+    display: grid;
+    width: 100%;
+    justify-content: space-between;
+    grid-template-columns: 65% 35%;
+}
+
+.modal {
+    border-radius: 10px;
+}
+
+.modal-content {
+    width: 750px;
+    height: 600px;
+}
+
+.modal-dialog {
+    min-width: 850px;
+    min-height: 750px;
+}
+
+.modal__body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    padding: 5px;
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--black);
+    margin-bottom: 15px;
+}
+
+.description {
+    margin: 25px 0;
+}
+
+.description__heading {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.description__text {
+    color: var(--font-grey);
+}
+
+.card-info {
+    border-collapse: collapse; 
+    width: 65%;
+}
+
+.info {
+    border: none; 
+}
+
+.info__name {
+    color: var(--font-grey);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding-left: 0;
+}
+
+.info__value {
+    padding: 8px; 
+}
+
+.modal__activity {
+    height: 100%;
+    padding: 5px;
+    background-color: var(--priority-grey);
+    border-bottom-right-radius: 10px;
+}
+
+.activity__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    color: var(--font-grey);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.date {
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.info {
+    color: var(--font-grey);
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.card-name {
+    color: var(--black);
+    font-weight: 500;
+}
+
+.important {
+    font-weight: 500;
+}

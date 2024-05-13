@@ -1,0 +1,35 @@
+<div class="container">
+    <header class="header">
+        <h5 class="name">{{name}}</h5>
+        <div class="dropdown" dropdown>
+            <button dropdownToggle class="button-toggle">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu" *dropdownMenu [class.dropdown-menu-right]="rightContextMenu">
+                <p class="dropdown-item">
+                    <i class="fa fa-edit"></i>
+                    Edit
+                </p>
+                <p class="dropdown-item delete">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </p>
+            </div>
+        </div>
+    </header>
+    <p class="description">{{description}}</p>
+    <p class="date">
+        <i class="fa fa-calendar-o"></i>
+        {{dueDate | date}}
+    </p>
+    <span class="priority">• {{priority}}</span>
+    <div class="dropdown" dropdown>
+        <button class="select" dropdownToggle>
+            Move To
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-menu move" *dropdownMenu>
+            <p class="dropdown-item" *ngFor="let list of lists" (click)="moveTo(list.id)">{{list.name}}</p>
+        </div>
+    </div>
+</div>
